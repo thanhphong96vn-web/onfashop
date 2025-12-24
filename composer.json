@@ -28,8 +28,8 @@
         "mehedi-iitdu/core-component-repository": "^2.2",
         "mercadopago/dx-php": "^2.4",
         "myfatoorah/laravel-package": "^2.2",
+        "myfatoorah/library": "~2.2.4",
         "niklasravnsborg/laravel-pdf": "*",
-
         "paypal/paypal-checkout-sdk": "dev-master",
         "razorpay/razorpay": "2.*",
         "spatie/db-dumper": "^3.3",

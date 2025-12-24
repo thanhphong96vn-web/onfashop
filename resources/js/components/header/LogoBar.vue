@@ -7,43 +7,54 @@
                         <img :src="appLogo" :alt="appName" height="40" />
                     </router-link>
                 </div>
-                <v-spacer  class="custom-spacer"  />
+                <v-spacer class="custom-spacer" />
                 <div :class="['flex-grow-1 search-box', { open: openSearch }]">
                     <v-form
-                        class="border rounded flex-grow-1"
+                        class="search-form rounded flex-grow-1"
+                        style="border-radius: 99px !important"
                         @submit.stop.prevent="search()"
                     >
                         <v-row align="center" dense>
                             <v-col cols="auto ms-1" class="d-md-none">
-                                <v-btn icon @click.stop="toggleSearch(false)" style="box-shadow: none;">
-                                    <i class="las la-arrow-left fs-18 ts-05" ></i>
+                                <v-btn
+                                    icon
+                                    @click.stop="toggleSearch(false)"
+                                    style="box-shadow: none"
+                                >
+                                    <i
+                                        class="las la-arrow-left fs-18 ts-05"
+                                    ></i>
                                 </v-btn>
+                            </v-col>
+                            <v-col cols="auto ms-2" class="d-none d-md-block">
+                                <i
+                                    class="las la-search fs-18 search-icon-clickable"
+                                    @click.stop="search()"
+                                ></i>
                             </v-col>
                             <v-col>
                                 <v-text-field
-                                    :placeholder="$t('search_for_products_brands_and_more')"
+                                    :placeholder="
+                                        $t(
+                                            'search_for_products_brands_and_more'
+                                        )
+                                    "
                                     type="text"
                                     hide-details="auto"
-                                    class="px-2"
+                                    class="px-2 search-input"
                                     v-model="searchKeyword"
+                                    @keyup.enter="search()"
                                     @keyup="ajaxSearch"
                                     required
                                     variant="plain"
                                 ></v-text-field>
                             </v-col>
-                            <v-col cols="auto me-1" class="d-none d-md-block">
-                                <v-btn
-                                    class="btn-primary"
-                                    block
-                                    elevation="0"
-                                    @click.stop.prevent="search()"
-                                    >{{ $t("search") }}</v-btn
-                                >
-                            </v-col>
                         </v-row>
                     </v-form>
-                    <div class="bg-white shadow-lg position-absolute search_content_box" v-if="showSuggestionContainer">
-
+                    <div
+                        class="bg-white shadow-lg position-absolute search_content_box"
+                        v-if="showSuggestionContainer"
+                    >
                         <div class="text-center py-4" v-if="loadingSuggestion">
                             <v-progress-circular
                                 indeterminate
@@ -53,7 +64,7 @@
                         </div>
 
                         <div v-else>
-                            <div 
+                            <div
                                 v-if="suggestionNotFound"
                                 class="text-center ma-8 fs-16"
                             >
@@ -62,10 +73,14 @@
                             <div class="search_content" v-else>
                                 <!-- Tags -->
                                 <div class="" v-if="keywords.length">
-                                    <div class="px-2 py-1 text-uppercase fs-10 text-right bg-grey-lighten-3">{{ $t('popular_suggestions') }}</div>
+                                    <div
+                                        class="px-2 py-1 text-uppercase fs-10 text-right bg-grey-lighten-3"
+                                    >
+                                        {{ $t("popular_suggestions") }}
+                                    </div>
                                     <ul class="list-unstyled px-5 py-2 fs-13">
                                         <li
-                                            v-for="(keyword, i) in keywords" 
+                                            v-for="(keyword, i) in keywords"
                                             :key="i"
                                             class="py-1 text-capitalize"
                                             @click="popularSuggesation(keyword)"
@@ -74,13 +89,17 @@
                                         </li>
                                     </ul>
                                 </div>
-                                
+
                                 <!-- Product Suggesations -->
                                 <div class="" v-if="products.length">
-                                    <div class="px-2 py-1 text-uppercase fs-10 text-right bg-grey-lighten-3">{{ $t('products') }}</div>
+                                    <div
+                                        class="px-2 py-1 text-uppercase fs-10 text-right bg-grey-lighten-3"
+                                    >
+                                        {{ $t("products") }}
+                                    </div>
                                     <ul class="list-unstyled px-5 py-2 fs-13">
-                                        <li 
-                                            v-for="(product, i) in products" 
+                                        <li
+                                            v-for="(product, i) in products"
                                             :key="i"
                                             class="py-1 d-flex align-center"
                                         >
@@ -89,23 +108,57 @@
                                                 :alt="product.name"
                                                 @error="imageFallback($event)"
                                                 class="img-fit size-50px"
-                                                
-                                            >
+                                            />
                                             <div class="ml-2">
-                                                <h5 class="opacity-60 mb-1 fs-13" @click="hideSearchContainer">
-                                                    <router-link 
-                                                        :to="{ name: 'ProductDetails', params: {slug: product.slug}}"
-                                                        class="text-reset">
+                                                <h5
+                                                    class="opacity-60 mb-1 fs-13"
+                                                    @click="hideSearchContainer"
+                                                >
+                                                    <router-link
+                                                        :to="{
+                                                            name: 'ProductDetails',
+                                                            params: {
+                                                                slug: product.slug,
+                                                            },
+                                                        }"
+                                                        class="text-reset"
+                                                    >
                                                         {{ product.name }}
                                                     </router-link>
                                                 </h5>
                                                 <div class="order-2 fs-14 lh-1">
-                                                    <template v-if="product.base_price > product.base_discounted_price">
-                                                        <del class="opacity-40">{{ format_price(product.base_price) }}</del>
-                                                        <span class="fw-700 text-red">{{ format_price(product.base_discounted_price) }}</span>
+                                                    <template
+                                                        v-if="
+                                                            product.base_price >
+                                                            product.base_discounted_price
+                                                        "
+                                                    >
+                                                        <del
+                                                            class="opacity-40"
+                                                            >{{
+                                                                format_price(
+                                                                    product.base_price
+                                                                )
+                                                            }}</del
+                                                        >
+                                                        <span
+                                                            class="fw-700 text-red"
+                                                            >{{
+                                                                format_price(
+                                                                    product.base_discounted_price
+                                                                )
+                                                            }}</span
+                                                        >
                                                     </template>
                                                     <template v-else>
-                                                        <span class="fw-700 text-red">{{ format_price(product.base_discounted_price) }}</span>
+                                                        <span
+                                                            class="fw-700 text-red"
+                                                            >{{
+                                                                format_price(
+                                                                    product.base_discounted_price
+                                                                )
+                                                            }}</span
+                                                        >
                                                     </template>
                                                 </div>
                                             </div>
@@ -115,40 +168,73 @@
 
                                 <!-- category Suggesations -->
                                 <div class="" v-if="categories.length">
-                                    <div class="px-2 py-1 text-uppercase fs-10 text-right bg-grey-lighten-3">{{ $t('category_suggestions') }}</div>
+                                    <div
+                                        class="px-2 py-1 text-uppercase fs-10 text-right bg-grey-lighten-3"
+                                    >
+                                        {{ $t("category_suggestions") }}
+                                    </div>
                                     <ul class="list-unstyled px-5 fs-13">
-                                        <li 
-                                            v-for="(category, i) in categories" 
+                                        <li
+                                            v-for="(category, i) in categories"
                                             :key="i"
                                             class="py-1"
                                             @click="hideSearchContainer"
                                         >
-                                            <router-link :to="{ name: 'Category', params: {categorySlug: category.slug}}" class="text-reset text-capitalize" >{{ category.name }}</router-link>
+                                            <router-link
+                                                :to="{
+                                                    name: 'Category',
+                                                    params: {
+                                                        categorySlug:
+                                                            category.slug,
+                                                    },
+                                                }"
+                                                class="text-reset text-capitalize"
+                                                >{{
+                                                    category.name
+                                                }}</router-link
+                                            >
                                         </li>
                                     </ul>
                                 </div>
-                                
+
                                 <!-- Brand Suggesations -->
                                 <div class="" v-if="brands.length">
-                                    <div class="px-2 py-1 text-uppercase fs-10 text-right bg-grey-lighten-3">{{ $t('brands') }}</div>
+                                    <div
+                                        class="px-2 py-1 text-uppercase fs-10 text-right bg-grey-lighten-3"
+                                    >
+                                        {{ $t("brands") }}
+                                    </div>
                                     <ul class="list-unstyled px-5 fs-13">
-                                        <li 
-                                            v-for="(brand, i) in brands" 
+                                        <li
+                                            v-for="(brand, i) in brands"
                                             :key="i"
                                             class="py-1"
                                             @click="hideSearchContainer"
                                         >
-                                            <router-link :to="{ name: 'Brand', params: {brandId: brand.id }}" class="text-reset text-capitalize" >{{ brand.name }}</router-link>
+                                            <router-link
+                                                :to="{
+                                                    name: 'Brand',
+                                                    params: {
+                                                        brandId: brand.id,
+                                                    },
+                                                }"
+                                                class="text-reset text-capitalize"
+                                                >{{ brand.name }}</router-link
+                                            >
                                         </li>
                                     </ul>
                                 </div>
 
                                 <!-- Shop Suggesations -->
                                 <div class="" v-if="shops.length">
-                                    <div class="px-2 py-1 text-uppercase fs-10 text-right bg-grey-lighten-3">{{ $t('Shops') }}</div>
+                                    <div
+                                        class="px-2 py-1 text-uppercase fs-10 text-right bg-grey-lighten-3"
+                                    >
+                                        {{ $t("Shops") }}
+                                    </div>
                                     <ul class="list-unstyled px-5 py-2 fs-13">
-                                        <li 
-                                            v-for="(shop, i) in shops" 
+                                        <li
+                                            v-for="(shop, i) in shops"
                                             :key="i"
                                             class="py-1 d-flex align-center"
                                         >
@@ -157,13 +243,21 @@
                                                 :alt="shop.name"
                                                 @error="imageFallback($event)"
                                                 class="img-fit size-30px"
-                                                
-                                            >
+                                            />
                                             <div class="ml-3">
-                                                <h5 class="opacity-60 mb-1 fs-13" @click="hideSearchContainer">
-                                                    <router-link 
-                                                    :to="{ name: 'ShopDetails', params: {slug: shop.slug}}"
-                                                        class="text-reset">
+                                                <h5
+                                                    class="opacity-60 mb-1 fs-13"
+                                                    @click="hideSearchContainer"
+                                                >
+                                                    <router-link
+                                                        :to="{
+                                                            name: 'ShopDetails',
+                                                            params: {
+                                                                slug: shop.slug,
+                                                            },
+                                                        }"
+                                                        class="text-reset"
+                                                    >
                                                         {{ shop.name }}
                                                     </router-link>
                                                 </h5>
@@ -171,88 +265,153 @@
                                         </li>
                                     </ul>
                                 </div>
-
                             </div>
                         </div>
-                        
                     </div>
                 </div>
-                
-                <v-btn
-                    style="height: 40px; width: 40px; min-width: 0 !important;"
-                    class="d-md-none border-gray-300 rounded-circle mx-auto mobile-search-button"
-                    fab
-                    variant="outlined"
-                    small
-                    @click.stop="toggleSearch(true)"
-                    elevation="0"
-                >
-                    <i class="las la-search fs-18 ts-05"></i>
-                </v-btn>
+
+                    <v-btn
+                        style="height: 40px; width: 40px; min-width: 0 !important"
+                        class="d-md-none border-gray-300 rounded-circle mobile-search-button"
+                        fab
+                        variant="outlined"
+                        small
+                        @click.stop="toggleSearch(true)"
+                        elevation="0"
+                    >
+                        <i class="las la-search fs-18 ts-05"></i>
+                    </v-btn>
 
                 <v-spacer class="d-none d-md-block custom-spacer" />
                 <div class="d-none d-md-block">
-                    <div class="d-flex align-center" v-if="!isAuthenticated">
-                        <i class="las la-user fs-30 lh-1 me-3 opacity-70"></i>
-                        <router-link
-                            :to="{ name: 'Login' }"
-                            class="text-reset opacity-80 fw-500"
-                            >{{ $t("login") }}</router-link
+                    <div class="d-flex align-center">
+                        <!-- Tra cứu đơn hàng -->
+                        <template
+                            v-if="
+                                generalSettings.track_order_guest_user ||
+                                isAuthenticated
+                            "
                         >
-                        <span class="mx-3 opacity-60">{{ $t("or") }}</span>
-                        <router-link
-                            :to="{ name: 'Registration' }"
-                            class="text-reset opacity-80 fw-500"
-                            >{{ $t("registration") }}</router-link
+                            <router-link
+                                :to="{ name: 'TrackOrder' }"
+                                class="header-action-link me-4"
+                            >
+                                <i class="las la-map-marker fs-20 me-1"></i>
+                                <div class="header-action-text">
+                                    <div>Tra cứu</div>
+                                </div>
+                            </router-link>
+                        </template>
+                        <!-- Giỏ hàng của bạn -->
+                        <div
+                            class="header-action-link me-4 c-pointer"
+                            @click.stop="openCartDrawer"
                         >
+                            <i
+                                class="las la-shopping-cart fs-20 me-1 -mr-1"
+                            ></i>
+                            <div class="header-action-text">
+                                <div>Giỏ hàng</div>
+                            </div>
+                        </div>
+
+                        <!-- Đăng nhập -->
+                        <template v-if="!isAuthenticated">
+                            <router-link
+                                :to="{ name: 'Login' }"
+                                class="header-login-btn"
+                            >
+                                <span class="me-2">Đăng nhập</span>
+                                <i class="las la-user fs-18"></i>
+                            </router-link>
+                        </template>
                     </div>
                     <!-- dashboard -->
-                    <div class="d-flex align-center" v-else>
-                        
+                    <div class="d-flex align-center" v-if="isAuthenticated">
                         <!-- notification -->
-                       
-                        <div class="notification" v-if="currentUser.user_type == 'customer'">
-                            <i class="las la-bell fs-30 lh-1 me-3 opacity-70" id="menu-activator" @click="fetNotification"></i>
+
+                        <div
+                            class="notification"
+                            v-if="currentUser.user_type == 'customer'"
+                        >
+                            <i
+                                class="las la-bell fs-30 lh-1 me-3 opacity-70"
+                                id="menu-activator"
+                                @click="fetNotification"
+                            ></i>
 
                             <v-menu activator="#menu-activator">
-                            <v-list>
-                                <v-list-item>
-                                    <h2 class="text-center"> {{ $t('notifications') }}</h2>
-                                </v-list-item>
-                                <v-divider class="mb-2"></v-divider>
-                                <div class="notifications-menu">
+                                <v-list>
+                                    <v-list-item>
+                                        <h2 class="text-center">
+                                            {{ $t("notifications") }}
+                                        </h2>
+                                    </v-list-item>
+                                    <v-divider class="mb-2"></v-divider>
+                                    <div class="notifications-menu">
+                                        <v-list-item
+                                            v-for="(
+                                                notification, index
+                                            ) in notifications"
+                                            :key="index"
+                                            :value="index"
+                                        >
+                                            <v-list-item-title
+                                                class="py-2 border-bottom"
+                                            >
+                                                <v-btn
+                                                    @click="
+                                                        openOrderDetails(
+                                                            notification.data
+                                                                .order_code
+                                                        )
+                                                    "
+                                                    text
+                                                    small
+                                                    class="px-2 text-primary"
+                                                >
+                                                    {{
+                                                        notification.data
+                                                            .order_code
+                                                    }}
+                                                    {{ $t(" has been ")
+                                                    }}{{
+                                                        notification.data.status
+                                                    }}
+                                                </v-btn>
+                                            </v-list-item-title>
+                                        </v-list-item>
+                                    </div>
                                     <v-list-item
-                                v-for="(notification, index) in notifications"
-                                :key="index"
-                                :value="index"
-                                >
-                                <v-list-item-title class="py-2 border-bottom">
-                                    <v-btn @click="openOrderDetails(notification.data.order_code)" text small class="px-2 text-primary">
-                                    {{ notification.data.order_code }} {{ $t(' has been ')  }}{{ notification.data.status }}
-                                </v-btn>
-                                </v-list-item-title>
-                                </v-list-item>
-                                </div>
-                                <v-list-item class="text-center mt-2 border-top">
-                                    <router-link
-                                        :to="{ name: 'Notification'}"
-                                        class="text-reset fs-14"
+                                        class="text-center mt-2 border-top"
                                     >
-                                            <p class="text-center"> {{ $t('view_all_notifications') }}</p>
-                                    </router-link>
-                                </v-list-item>
-                            </v-list>
-                          
+                                        <router-link
+                                            :to="{ name: 'Notification' }"
+                                            class="text-reset fs-14"
+                                        >
+                                            <p class="text-center">
+                                                {{
+                                                    $t("view_all_notifications")
+                                                }}
+                                            </p>
+                                        </router-link>
+                                    </v-list-item>
+                                </v-list>
                             </v-menu>
                         </div>
                         <!--  end of notification -->
                         <i class="las la-user fs-30 lh-1 me-3 opacity-70"></i>
                         <router-link
-                            :to="{ name: currentUser.user_type == 'delivery_boy' ? 'DeliveryBoyDashboard': 'DashBoard' }"
+                            :to="{
+                                name:
+                                    currentUser.user_type == 'delivery_boy'
+                                        ? 'DeliveryBoyDashboard'
+                                        : 'DashBoard',
+                            }"
                             class="text-reset opacity-80 fw-500"
                             >{{ $t("dashboard") }}</router-link
                         >
-                        <span class="mx-3 opacity-60">{{ $t('or') }}</span>
+                        <span class="mx-3 opacity-60">{{ $t("or") }}</span>
                         <div
                             class="text-reset opacity-80 fw-500 c-pointer"
                             @click.stop="logout"
@@ -267,7 +426,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 export default {
     props: {
         loading: { type: Boolean, required: true, default: true },
@@ -291,26 +450,30 @@ export default {
         notifications: [],
     }),
     computed: {
-        ...mapGetters("app", ["appLogo", "appName"]),
-        ...mapGetters("auth", ["isAuthenticated","currentUser"]),
+        ...mapGetters("app", ["appLogo", "appName", "generalSettings"]),
+        ...mapGetters("auth", ["isAuthenticated", "currentUser"]),
     },
     methods: {
         ...mapActions(["auth/logout"]),
         ...mapActions("cart", ["resetCart"]),
         ...mapActions("wishlist", ["resetWishlist"]),
+        ...mapMutations("auth", ["updateCartDrawer"]),
 
-        openOrderDetails(orderCode){
-            this.$router.push({ name: "OrderDetails", params: { code: orderCode } });
+        openOrderDetails(orderCode) {
+            this.$router.push({
+                name: "OrderDetails",
+                params: { code: orderCode },
+            });
         },
-        async fetNotification(){
+        async fetNotification() {
             const res = await this.call_api("get", `user/notification`);
-            if(res.data.success){
+            if (res.data.success) {
                 this.notifications = res.data.notifications;
             }
         },
 
         search() {
-            this.showSuggestionContainer = false
+            this.showSuggestionContainer = false;
             this.$router
                 .push({
                     name: "Search",
@@ -325,26 +488,29 @@ export default {
                 .catch(() => {});
         },
 
-        hideSearchContainer(){
+        hideSearchContainer() {
             this.showSuggestionContainer = false;
         },
 
-        popularSuggesation(tag){
+        popularSuggesation(tag) {
             this.showSuggestionContainer = false;
             this.searchKeyword = tag;
             this.search();
         },
 
-        async ajaxSearch(event){
+        async ajaxSearch(event) {
             this.loadingSuggestion = true;
             this.showSuggestionContainer = false;
             const searchKey = event.target.value;
 
-            if(searchKey.length > 0){
+            if (searchKey.length > 0) {
                 this.showSuggestionContainer = true;
-                const res = await this.call_api("get", `search.ajax/${searchKey}`);
+                const res = await this.call_api(
+                    "get",
+                    `search.ajax/${searchKey}`
+                );
 
-                if(res.data.success){
+                if (res.data.success) {
                     this.suggestionNotFound = false;
                     this.loadingSuggestion = false;
                     this.keywords = res.data.keywords;
@@ -352,9 +518,7 @@ export default {
                     this.brands = res.data.brands;
                     this.products = res.data.products.data;
                     this.shops = res.data.shops.data;
-
-                }
-                else{
+                } else {
                     this.loadingSuggestion = false;
                     this.suggestionNotFound = true;
                 }
@@ -371,17 +535,22 @@ export default {
         toggleSearch(status) {
             this.openSearch = status;
         },
-        // Close search content bar when click 
+        openCartDrawer() {
+            this.updateCartDrawer(true);
+        },
+        // Close search content bar when click
         onClick: function (event) {
-            let trigger = document.getElementsByClassName(".search_content_box");
-            if(trigger !== event.target ){
+            let trigger = document.getElementsByClassName(
+                ".search_content_box"
+            );
+            if (trigger !== event.target) {
                 this.showSuggestionContainer = false;
-            } 
-        }
+            }
+        },
     },
     mounted() {
-    document.addEventListener('click', this.onClick);
-  },
+        document.addEventListener("click", this.onClick);
+    },
 };
 </script>
 <style scoped>
@@ -389,17 +558,110 @@ export default {
     min-height: 68px;
     position: relative;
     z-index: 1;
+    background: var(
+        --color-primary-gradient,
+        linear-gradient(to right, #fdcc34, #ffd562)
+    );
 }
-.search_content_box{
+
+.header-action-link {
+    color: #000 !important;
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    transition: opacity 0.2s ease;
+}
+
+.header-action-link:hover {
+    opacity: 0.8;
+}
+
+.header-action-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.header-action-text div {
+    font-size: 13px;
+}
+
+.header-divider {
+    border-color: rgba(0, 0, 0, 0.15) !important;
+    height: 40px;
+}
+
+.search-icon-clickable {
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.search-icon-clickable:hover {
+    opacity: 0.7;
+}
+
+.header-login-btn {
+    background-color: #fff3cd;
+    border: 1px solid #ffd700;
+    border-radius: 4px;
+    padding: 8px 16px;
+    color: #000 !important;
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+.header-login-btn:hover {
+    background-color: #ffe69c;
+    opacity: 1;
+}
+
+.search-form {
+    background: #fff;
+    border: none;
+    box-shadow: none;
+    padding: 2px 4px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.search-input :deep(.v-field__input) {
+    padding-left: 8px;
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+    min-height: 36px !important;
+}
+
+.search-input :deep(.v-field) {
+    min-height: 36px !important;
+}
+
+.search-input :deep(.v-field__field) {
+    min-height: 36px !important;
+}
+.search_content_box {
     width: 100%;
 }
 
 @media (max-width: 768px) {
-    .search_content_box{
+    .search_content_box {
         top: 60px;
     }
 }
 @media (max-width: 959px) {
+    .logobar .d-flex {
+        justify-content: space-between;
+    }
+    
+    .mobile-search-button {
+        margin-left: auto !important;
+        margin-right: 0 !important;
+    }
+    
     .search-box {
         position: absolute;
         width: calc(100% - 24px);
@@ -425,13 +687,13 @@ export default {
     }
 }
 
-.v-menu__content.theme-light.menuable__content__active{
+.v-menu__content.theme-light.menuable__content__active {
     top: 100px !important;
     position: fixed;
     min-width: 350px !important;
 }
 
-.notifications-menu{
+.notifications-menu {
     min-height: 100px;
     max-height: 300px;
     overflow-y: auto;
