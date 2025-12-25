@@ -46,7 +46,10 @@ class CheckForMaintenanceMode extends Middleware
     public function handle($request, Closure $next)
     {
         if ($this->app->isDownForMaintenance()){
-            if((auth()->check() && auth()->user()->user_type == 'admin') || (auth()->check() && auth()->user()->user_type == 'staff') || $this->inExceptArray($request)) {
+            if((auth()->check() && auth()->user()->user_type == 'admin') 
+                || (auth()->check() && auth()->user()->user_type == 'staff') 
+                || (auth()->check() && auth()->user()->user_type == 'seller') 
+                || $this->inExceptArray($request)) {
                 return $next($request);
             }
             else {

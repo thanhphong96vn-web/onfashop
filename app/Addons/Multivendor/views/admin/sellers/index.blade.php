@@ -68,6 +68,7 @@
                     </thead>
                     <tbody>
                         @foreach ($shops as $key => $shop)
+                            @if($shop->user) {{-- Chỉ hiển thị nếu shop có user --}}
                             <tr>
                                 <td>
                                     <div class="form-group">
@@ -88,9 +89,9 @@
                                             <div class="text-truncate fs-12 fw-600">
                                                 {{ $shop->user->name ?? translate('Deleted User') }}</div>
                                             <div class="text-truncate fs-12">
-                                                {{ translate('Phone') . ': ' . $shop->user->phone ?? null }}</div>
+                                                {{ translate('Phone') . ': ' . ($shop->user->phone ?? 'N/A') }}</div>
                                             <div class="text-truncate fs-12">
-                                                {{ translate('Email') . ': ' . $shop->user->email ?? null }}</div>
+                                                {{ translate('Email') . ': ' . ($shop->user->email ?? 'N/A') }}</div>
                                         </span>
                                     </div>
                                 </td>
@@ -192,6 +193,7 @@
                                     </div>
                                 </td>
                             </tr>
+                            @endif {{-- Đóng điều kiện kiểm tra user --}}
                         @endforeach
                     </tbody>
                 </table>

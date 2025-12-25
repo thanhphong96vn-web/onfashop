@@ -232,7 +232,6 @@ import { loadRecaptcha } from "@/utils/loadRecaptcha";
 import { useRecaptcha } from "@/utils/useRecaptcha";
 import { removeRecaptcha } from "@/utils/removeRecaptcha";
 
-
 const { verifyRecaptcha } = useRecaptcha();
 
 export default {
@@ -307,7 +306,10 @@ export default {
         ...mapGetters("auth", ["authSettings", "currentUser"]),
     },
     async mounted() {
-        if(this.generalSettings.google_recaptcha && this.generalSettings.recaptcha_customer_login){
+        if (
+            this.generalSettings.google_recaptcha &&
+            this.generalSettings.recaptcha_customer_login
+        ) {
             try {
                 await loadRecaptcha(import.meta.env.VITE_RECAPTCHA_KEY);
                 this.recaptchaReady = true;
@@ -321,7 +323,7 @@ export default {
     beforeUnmount() {
         removeRecaptcha();
     },
-    
+
     methods: {
         ...mapActions("auth", {
             actionLogin: "login",
@@ -336,18 +338,19 @@ export default {
             if (phone.valid) this.form.showInvalidPhone = false;
         },
         async login() {
-
-            if(this.generalSettings.google_recaptcha && this.generalSettings.recaptcha_customer_login){
+            if (
+                this.generalSettings.google_recaptcha &&
+                this.generalSettings.recaptcha_customer_login
+            ) {
                 const response_recapcha = await verifyRecaptcha("login");
-                if(!response_recapcha.success){
-                     this.snack({
+                if (!response_recapcha.success) {
+                    this.snack({
                         message: response_recapcha.message,
                         color: "red",
                     });
                     return;
                 }
             }
-
 
             // Prevents form submitting if it has error
             const isFormCorrect = await this.v$.$validate();

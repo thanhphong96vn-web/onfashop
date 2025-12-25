@@ -35,15 +35,13 @@
                     <span class="fw-500 fs-13 ml-2 mr-0 opacity-60">{{ translate('Browse Website') }}</span>
                 </a>
             </div>
-            @if(seller_package_validity_check($shop->seller_package, $shop->package_invalid_at) == 'active' && $shop->products->count() < $shop->product_upload_limit)
-                <div class="aiz-topbar-item align-items-center ml-3">
-                    <a class="btn btn-outline-secondary border-gray-300 d-flex align-items-center px-3"
-                        href="{{ route('seller.products.create') }}" target="_blank">
-                        <i class="las la-plus ts-08 opacity-60"></i>
-                        <span class="fw-500 fs-13 ml-2 mr-0 opacity-60">{{ translate('Add new product') }}</span>
-                    </a>
-                </div>
-            @endif
+            <div class="aiz-topbar-item align-items-center ml-3">
+                <a class="btn btn-outline-secondary border-gray-300 d-flex align-items-center px-3"
+                    href="{{ route('seller.products.create') }}" target="_blank">
+                    <i class="las la-plus ts-08 opacity-60"></i>
+                    <span class="fw-500 fs-13 ml-2 mr-0 opacity-60">{{ translate('Add new product') }}</span>
+                </a>
+            </div>
         </div>
         <div class="d-flex justify-content-around align-items-center align-items-stretch">
   <!-- Notification -->

@@ -80,27 +80,30 @@ class SellerController extends Controller
     public function show_product_upload_form(Request $request)
     {
         $shop = Auth::user()->shop;
-        if ($shop->verification_status == 0 && $shop->verification_info == null) {
-            flash(translate("You are not verified. Please verify at first."))->warning();
-            return redirect()->back();
-        }
-        if (seller_package_validity_check($shop->seller_package, $shop->package_invalid_at) == 'active' && $shop->products->count() < $shop->product_upload_limit) {
+        // Bỏ qua kiểm tra verification - cho phép seller thêm sản phẩm tự do
+        // if ($shop->verification_status == 0 && $shop->verification_info == null) {
+        //     flash(translate("You are not verified. Please verify at first."))->warning();
+        //     return redirect()->back();
+        // }
+        // Bỏ qua kiểm tra package - cho phép seller thêm sản phẩm không giới hạn
+        // if (seller_package_validity_check($shop->seller_package, $shop->package_invalid_at) == 'active' && $shop->products->count() < $shop->product_upload_limit) {
             $categories = Category::where('level', 0)->where('digital', 0)->get();
             $attributes = Attribute::get();
             return view('addon:multivendor::seller.products.create', compact('categories', 'attributes'));
-        } else {
-            flash(translate("You don't have any active package. Please upgrade/renew your package."))->warning();
-            return redirect()->route('seller.package_select');
-        }
+        // } else {
+        //     flash(translate("You don't have any active package. Please upgrade/renew your package."))->warning();
+        //     return redirect()->route('seller.package_select');
+        // }
     }
 
     public function seller_product_store(Request $request)
     {
         $shop = auth()->user()->shop;
-        if ($shop->seller_package_id == null || $shop->product_upload_limit <= $shop->products->count()) {
-            flash(translate('Upload limit has been reached. Please upgrade your package.'))->warning();
-            return back();
-        }
+        // Bỏ qua kiểm tra package - cho phép seller thêm sản phẩm không giới hạn
+        // if ($shop->seller_package_id == null || $shop->product_upload_limit <= $shop->products->count()) {
+        //     flash(translate('Upload limit has been reached. Please upgrade your package.'))->warning();
+        //     return back();
+        // }
 
         if (!$request->has('main_category')) {
             flash(translate('Select a main category'))->error();
@@ -293,10 +296,11 @@ class SellerController extends Controller
     public function show_product_edit_form(Request $request, $id)
     {
         $product = Product::findOrFail($id);
-        if ($product->shop->verification_status == 0 && $product->shop->verification_info == null) {
-            flash(translate("You are not verified. Please verify at first."))->warning();
-            return redirect()->back();
-        }
+        // Bỏ qua kiểm tra verification - cho phép seller chỉnh sửa sản phẩm tự do
+        // if ($product->shop->verification_status == 0 && $product->shop->verification_info == null) {
+        //     flash(translate("You are not verified. Please verify at first."))->warning();
+        //     return redirect()->back();
+        // }
         if ($product->shop_id != auth()->user()->shop_id) {
             abort(403);
         }
@@ -571,12 +575,13 @@ class SellerController extends Controller
     public function seller_product_published(Request $request)
     {
         $shop = auth()->user()->shop;
-        if (seller_package_validity_check($shop->seller_package, $shop->package_invalid_at) != 'active') {
-            return response()->json([
-                'success' => false,
-                'message' => translate('Please upgrade your package for changing status.')
-            ]);
-        }
+        // Bỏ qua kiểm tra package - cho phép seller thay đổi trạng thái sản phẩm tự do
+        // if (seller_package_validity_check($shop->seller_package, $shop->package_invalid_at) != 'active') {
+        //     return response()->json([
+        //         'success' => false,
+        //         'message' => translate('Please upgrade your package for changing status.')
+        //     ]);
+        // }
 
         $product = Product::findOrFail($request->id);
         $product->published = $request->status;

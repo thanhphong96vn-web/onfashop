@@ -10,18 +10,16 @@
             <div class="col-md-4">
                 <h1 class="h3">{{ translate('All products') }}</h1>
             </div>
-            @if (seller_package_validity_check($shop->seller_package, $shop->package_invalid_at) == 'active' &&
-                    $shop->products->count() < $shop->product_upload_limit)
-                <div class="col-md-8 text-md-right">
-                    <a href="{{ route('seller.products.create') }}" class="btn btn-primary">
-                        <span>{{ translate('Add New Product') }}</span>
-                    </a>
-                </div>
-            @endif
+            <div class="col-md-8 text-md-right">
+                <a href="{{ route('seller.products.create') }}" class="btn btn-primary">
+                    <span>{{ translate('Add New Product') }}</span>
+                </a>
+            </div>
         </div>
     </div>
 
-    @if (seller_package_validity_check($shop->seller_package, $shop->package_invalid_at) == 'no_package')
+    {{-- Bỏ qua hiển thị thông báo package - cho phép seller thêm sản phẩm tự do --}}
+    {{-- @if (seller_package_validity_check($shop->seller_package, $shop->package_invalid_at) == 'no_package')
         <div class="alert alert-danger">
             {{ translate("You don't have any active package") }}
         </div>
@@ -44,7 +42,7 @@
             <span
                 class="fw-600">{{ $shop->product_upload_limit - $shop->products->count() }}/{{ $shop->product_upload_limit }}</span>
         </div>
-    @endif
+    @endif --}}
 
     <div class="card">
         <form class="" id="sort_products" action="" method="GET">

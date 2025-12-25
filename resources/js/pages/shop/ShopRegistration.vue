@@ -42,7 +42,6 @@
                                     type="text"
                                     v-model="form.name"
                                     :error-messages="nameErrors"
-                                    @blur="v$.form.name.$touch()"
                                     hide-details="auto"
                                     required
                                     outlined
@@ -52,57 +51,25 @@
                                 <div class="mb-1 fs-13 fw-500">
                                     {{ $t("phone_number") }}
                                 </div>
-                                <vue-tel-input
+                                <v-text-field
+                                    variant="plain"
+                                    class="text-field"
+                                    :placeholder="$t('phone_number')"
+                                    type="tel"
                                     v-model="form.phone"
-                                    v-bind="mobileInputProps"
-                                    :onlyCountries="availableCountries"
-                                    @validate="phoneValidate"
+                                    @input="form.phone = form.phone.replace(/\D/g, '')"
+                                    hide-details="auto"
+                                    required
+                                    outlined
+                                    maxlength="10"
+                                ></v-text-field>
+                                <p
+                                    v-for="error of v$.form.phone.$errors"
+                                    :key="error.$uid"
+                                    class="text-red"
                                 >
-                                    <template slot="arrow-icon"
-                                        ><span class="vti__dropdown-arrow"
-                                            >&nbsp;▼</span
-                                        ></template
-                                    >
-                                </vue-tel-input>
-                                <div
-                                    class="v-text-field__details mt-2 pl-3"
-                                    v-if="v$.form.phone.$error"
-                                >
-                                    <div
-                                        class="v-messages theme--light error--text"
-                                        role="alert"
-                                    >
-                                        <div class="v-messages__wrapper">
-                                            <div class="v-messages__message">
-                                                {{
-                                                    $t("this_field_is_required")
-                                                }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div
-                                    class="v-text-field__details mt-2 pl-3"
-                                    v-if="
-                                        !v$.form.phone.$error &&
-                                        form.showInvalidPhone
-                                    "
-                                >
-                                    <div
-                                        class="v-messages theme--light error--text"
-                                        role="alert"
-                                    >
-                                        <div class="v-messages__wrapper">
-                                            <div class="v-messages__message text-red">
-                                                {{
-                                                    $t(
-                                                        "phone_number_must_be_valid"
-                                                    )
-                                                }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                    {{ error.$message }}
+                                </p>
                             </div>
                             <div class="mb-4">
                                 <div class="fs-13 fw-500">
@@ -115,7 +82,6 @@
                                     type="email"
                                     v-model="form.email"
                                     :error-messages="emailErrors"
-                                    @blur="v$.form.email.$touch()"
                                     hide-details="auto"
                                     required
                                     outlined
@@ -130,7 +96,6 @@
                                     placeholder="* * * * * * * *"
                                     v-model="form.password"
                                     :error-messages="passwordErrors"
-                                    @blur="v$.form.password.$touch()"
                                     type="password"
                                     class="input-group--focused text-field"
                                     hide-details="auto"
@@ -147,7 +112,6 @@
                                     placeholder="* * * * * * * *"
                                     v-model="form.confirmPassword"
                                     :error-messages="confirmPasswordErrors"
-                                    @blur="v$.form.confirmPassword.$touch()"
                                     type="password"
                                     class="input-group--focused text-field"
                                     hide-details="auto"
@@ -176,7 +140,6 @@
                                     type="text"
                                     v-model="form.shopName"
                                     :error-messages="shopNameErrors"
-                                    @blur="v$.form.shopName.$touch()"
                                     hide-details="auto"
                                     required
                                     outlined
@@ -193,7 +156,6 @@
                                     type="number"
                                     v-model="form.shopPhone"
                                     :error-messages="shopPhoneErrors"
-                                    @blur="v$.form.shopPhone.$touch()"
                                     hide-details="auto"
                                     required
                                     outlined
@@ -210,7 +172,6 @@
                                     type="text"
                                     v-model="form.shopAddress"
                                     :error-messages="shopAddressErrors"
-                                    @blur="v$.form.shopAddress.$touch()"
                                     hide-details="auto"
                                     required
                                     outlined
@@ -254,7 +215,6 @@
 import { required, email, minLength } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
 import { mapActions, mapGetters, mapMutations } from "vuex";
-import { VueTelInput } from "vue-tel-input";
 
 import { loadRecaptcha } from "@/utils/loadRecaptcha";
 import { useRecaptcha } from "@/utils/useRecaptcha";
@@ -265,20 +225,6 @@ const { verifyRecaptcha } = useRecaptcha();
 export default {
     data: () => ({
         loading: false,
-        mobileInputProps: {
-            inputOptions: {
-                type: "tel",
-                placeholder: "phone number",
-            },
-            dropdownOptions: {
-                showDialCodeInSelection: false,
-                showFlags: true,
-                showDialCodeInList: true,
-            },
-            autoDefaultCountry: false,
-            validCharactersOnly: true,
-            mode: "international",
-        },
         v$: useVuelidate(),
         form: {
             name: "",
@@ -286,21 +232,26 @@ export default {
             email: "",
             password: "",
             confirmPassword: "",
-            invalidPhone: true,
-            showInvalidPhone: false,
             shopName: "",
             shopPhone: "",
             shopAddress: "",
         },
     }),
     components: {
-        VueTelInput,
     },
     validations: {
         form: {
             name: { required },
             email: { required, email },
-            phone: { required },
+            phone: {
+                required,
+                minLength: minLength(10),
+                phoneFormat: (value) => {
+                    if (!value) return true;
+                    // Chỉ chấp nhận số và đúng 10 số
+                    return /^\d{10}$/.test(value);
+                },
+            },
             password: { required, minLength: minLength(6) },
             confirmPassword: {
                 required,
@@ -311,7 +262,7 @@ export default {
         },
     },
     computed: {
-        ...mapGetters("app", ["generalSettings", "availableCountries"]),
+        ...mapGetters("app", ["generalSettings"]),
         nameErrors() {
             const errors = [];
             if (!this.v$.form.name.$dirty) return errors;
@@ -392,10 +343,6 @@ export default {
         ...mapActions("auth", ["login"]),
         ...mapMutations("cart", ["removeTempUserId"]),
         ...mapMutations("auth", ["updateChatWindow", "showLoginDialog"]),
-        phoneValidate(phone) {
-            this.form.invalidPhone = phone.valid ? false : true;
-            if (phone.valid) this.form.showInvalidPhone = false;
-        },
         async register() {
 
             if(this.generalSettings.google_recaptcha && this.generalSettings.recaptcha_shop_register){
@@ -409,15 +356,13 @@ export default {
                 }
             }
 
-            if (this.form.invalidPhone) {
-                this.form.showInvalidPhone = true;
-                return;
-            }
-            // Prevents form submitting if it has error
+            // Validate tất cả fields khi submit
+            this.v$.$touch();
             const isFormCorrect = await this.v$.$validate();
             if (!isFormCorrect) return;
 
-            this.form.phone = this.form.phone.replace(/\s/g, "");
+            // Chỉ lấy số, loại bỏ ký tự đặc biệt
+            this.form.phone = this.form.phone.replace(/\D/g, "");
 
             this.loading = true;
             const res = await this.call_api("post", "shop/register", this.form);
@@ -442,8 +387,6 @@ export default {
             this.form.email = "";
             this.form.password = "";
             this.form.confirmPassword = "";
-            this.form.invalidPhone = true;
-            this.form.showInvalidPhone = false;
             this.form.shopName = "";
             this.form.shopPhone = "";
             this.form.shopAddress = "";

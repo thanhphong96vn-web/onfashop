@@ -31,7 +31,17 @@ class SellerController extends Controller
 
         $sort_search = null;
         $approved = null;
-        $shops = Shop::withCount('products')->with(['user', 'seller_package'])->where('id', '!=', $admin->shop_id);
+        
+        // Chỉ lấy shops có user và loại trừ admin shop
+        $shops = Shop::withCount('products')
+            ->with(['user', 'seller_package'])
+            ->whereHas('user') // Chỉ lấy shops có user
+            ->where('user_id', '!=', $admin->id); // Loại trừ admin bằng user_id
+        
+        // Nếu admin có shop_id, cũng filter thêm bằng shop_id để chắc chắn
+        if ($admin->shop_id) {
+            $shops = $shops->where('id', '!=', $admin->shop_id);
+        }
 
         if ($request->has('approved_status') && $request->approved_status != null) {
             $approved = $request->approved_status;
@@ -40,11 +50,13 @@ class SellerController extends Controller
 
         if ($request->has('search') && $request->search != null) {
             $sort_search = $request->search;
-            $shops = $shops->where('name', 'like', '%' . $sort_search . '%')
-                ->orWhere('phone', 'like', '%' . $sort_search . '%')
-                ->orWhereHas('user', function ($query) use ($sort_search) {
-                    $query->where('name', 'like', '%' . $sort_search . '%');
-                });
+            $shops = $shops->where(function($q) use ($sort_search) {
+                $q->where('name', 'like', '%' . $sort_search . '%')
+                  ->orWhere('phone', 'like', '%' . $sort_search . '%')
+                  ->orWhereHas('user', function ($query) use ($sort_search) {
+                      $query->where('name', 'like', '%' . $sort_search . '%');
+                  });
+            });
         }
 
         $shops = $shops->latest()->paginate(15);
@@ -210,7 +222,14 @@ class SellerController extends Controller
         $shop_id = null;
 
         $admin = User::where('user_type', 'admin')->first();
-        $products = Product::orderBy('created_at', 'desc')->where('shop_id', '!=', $admin->shop->id);
+        
+        // Xử lý trường hợp admin chưa có shop
+        $products = Product::orderBy('created_at', 'desc');
+        
+        // Chỉ filter admin shop nếu admin có shop_id
+        if ($admin->shop_id) {
+            $products = $products->where('shop_id', '!=', $admin->shop_id);
+        }
 
         if ($request->shop_id != null) {
             $shop_id = $request->shop_id;

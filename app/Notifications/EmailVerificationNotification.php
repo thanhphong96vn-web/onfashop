@@ -30,6 +30,7 @@ class EmailVerificationNotification extends Notification
         $array['verification_code'] = $verification_code;
  
         return (new MailMessage)
+            ->from(env('MAIL_FROM_ADDRESS', config('mail.from.address')), env('MAIL_FROM_NAME', config('mail.from.name')))
             ->view('emails.verification', ['array' => $array])
             ->subject(translate('Email Verification').' - '.env('APP_NAME'));
     }

@@ -4,7 +4,8 @@
 
     @php $shop = auth()->user()->shop @endphp
 
-    @if (seller_package_validity_check($shop->seller_package, $shop->package_invalid_at) == 'no_package' )
+    {{-- Bỏ qua hiển thị thông báo package - cho phép seller thêm sản phẩm tự do --}}
+    {{-- @if (seller_package_validity_check($shop->seller_package, $shop->package_invalid_at) == 'no_package' )
         <div class="alert alert-danger">
             {{ translate("You don't have any active package") }}
         </div>
@@ -22,7 +23,7 @@
             {{ translate('will expire at') }}
             {{ $shop->package_invalid_at }}
         </div>
-    @endif
+    @endif --}}
 
     <div class="row">
         <div class="col-xl-3 col-md-6">

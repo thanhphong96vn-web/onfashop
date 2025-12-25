@@ -73,19 +73,39 @@ class AuthController extends Controller
 
         if (get_setting('customer_otp_with') != 'disabled') {
             if (get_setting('customer_login_with') == 'email' || (get_setting('customer_login_with') == 'email_phone' && get_setting('customer_otp_with') == 'email')) {
-                $user->notify(new EmailVerificationNotification());
-                return response()->json([
-                    'success' => true,
-                    'verified' => false,
-                    'message' => translate('A verification code has been sent to your email.')
-                ], 200);
+                try {
+                    $user->notify(new EmailVerificationNotification());
+                    return response()->json([
+                        'success' => true,
+                        'verified' => false,
+                        'message' => translate('A verification code has been sent to your email.')
+                    ], 200);
+                } catch (\Exception $e) {
+                    \Log::error('Email sending failed: ' . $e->getMessage());
+                    // Vẫn trả về thành công nhưng cảnh báo không gửi được email
+                    return response()->json([
+                        'success' => true,
+                        'verified' => false,
+                        'message' => translate('Account created successfully. Please contact admin for verification code. Code: ') . $user->verification_code
+                    ], 200);
+                }
             } else {
-                (new SmsServices)->phoneVerificationSms($user->phone, $user->verification_code);
-                return response()->json([
-                    'success' => true,
-                    'verified' => false,
-                    'message' => translate('A verification code has been sent to your phone.')
-                ], 200);
+                try {
+                    (new SmsServices)->phoneVerificationSms($user->phone, $user->verification_code);
+                    return response()->json([
+                        'success' => true,
+                        'verified' => false,
+                        'message' => translate('A verification code has been sent to your phone.')
+                    ], 200);
+                } catch (\Exception $e) {
+                    \Log::error('SMS sending failed: ' . $e->getMessage());
+                    // Vẫn trả về thành công nhưng cảnh báo không gửi được SMS
+                    return response()->json([
+                        'success' => true,
+                        'verified' => false,
+                        'message' => translate('Account created successfully. Please contact admin for verification code. Code: ') . $user->verification_code
+                    ], 200);
+                }
             }
         }
 
@@ -151,23 +171,43 @@ class AuthController extends Controller
 
             if (get_setting('customer_otp_with') != 'disabled') {
                 if (get_setting('customer_login_with') == 'email' || (get_setting('customer_login_with') == 'email_phone' && get_setting('customer_otp_with') == 'email') && $user->email_verified_at == null) {
-
-                    $user->notify(new EmailVerificationNotification());
-                    return response()->json([
-                        'success' => true,
-                        'verified' => false,
-                        'email_verified' => false,
-                        'message' => translate('Please verify your account')
-                    ], 200);
+                    try {
+                        $user->notify(new EmailVerificationNotification());
+                        return response()->json([
+                            'success' => true,
+                            'verified' => false,
+                            'email_verified' => false,
+                            'message' => translate('Please verify your account')
+                        ], 200);
+                    } catch (\Exception $e) {
+                        \Log::error('Email sending failed in login: ' . $e->getMessage());
+                        // Vẫn cho phép login thành công, nhưng thông báo không gửi được email
+                        return response()->json([
+                            'success' => true,
+                            'verified' => false,
+                            'email_verified' => false,
+                            'message' => translate('Account verified. Please contact admin for verification code. Code: ') . $user->verification_code
+                        ], 200);
+                    }
                 } elseif ((get_setting('customer_login_with') == 'phone' || (get_setting('customer_login_with') == 'email_phone' && get_setting('customer_otp_with') == 'phone')) && $user->phone_verified_at == null) {
-
-                    (new SmsServices)->phoneVerificationSms($user->phone, $user->verification_code);
-                    return response()->json([
-                        'success' => true,
-                        'verified' => false,
-                        'phone_verified' => false,
-                        'message' => translate('Please verify your account')
-                    ], 200);
+                    try {
+                        (new SmsServices)->phoneVerificationSms($user->phone, $user->verification_code);
+                        return response()->json([
+                            'success' => true,
+                            'verified' => false,
+                            'phone_verified' => false,
+                            'message' => translate('Please verify your account')
+                        ], 200);
+                    } catch (\Exception $e) {
+                        \Log::error('SMS sending failed in login: ' . $e->getMessage());
+                        // Vẫn cho phép login thành công, nhưng thông báo không gửi được SMS
+                        return response()->json([
+                            'success' => true,
+                            'verified' => false,
+                            'phone_verified' => false,
+                            'message' => translate('Account verified. Please contact admin for verification code. Code: ') . $user->verification_code
+                        ], 200);
+                    }
                 }
             }
 
@@ -240,19 +280,37 @@ class AuthController extends Controller
         $user->save();
 
         if (get_setting('customer_login_with') == 'email' || (get_setting('customer_login_with') == 'email_phone' && get_setting('customer_otp_with') == 'email')) {
-            $user->notify(new EmailVerificationNotification());
-            return response()->json([
-                'success' => true,
-                'verified' => false,
-                'message' => translate('A verification code has been sent to your email.')
-            ], 200);
+            try {
+                $user->notify(new EmailVerificationNotification());
+                return response()->json([
+                    'success' => true,
+                    'verified' => false,
+                    'message' => translate('A verification code has been sent to your email.')
+                ], 200);
+            } catch (\Exception $e) {
+                \Log::error('Email sending failed in resend_code: ' . $e->getMessage());
+                return response()->json([
+                    'success' => true,
+                    'verified' => false,
+                    'message' => translate('Verification code: ') . $user->verification_code . '. ' . translate('Email sending failed. Please contact admin.')
+                ], 200);
+            }
         } else {
-            (new SmsServices)->phoneVerificationSms($user->phone, $user->verification_code);
-            return response()->json([
-                'success' => true,
-                'verified' => false,
-                'message' => translate('A verification code has been sent to your phone.')
-            ], 200);
+            try {
+                (new SmsServices)->phoneVerificationSms($user->phone, $user->verification_code);
+                return response()->json([
+                    'success' => true,
+                    'verified' => false,
+                    'message' => translate('A verification code has been sent to your phone.')
+                ], 200);
+            } catch (\Exception $e) {
+                \Log::error('SMS sending failed in resend_code: ' . $e->getMessage());
+                return response()->json([
+                    'success' => true,
+                    'verified' => false,
+                    'message' => translate('Verification code: ') . $user->verification_code . '. ' . translate('SMS sending failed. Please contact admin.')
+                ], 200);
+            }
         }
     }
 
