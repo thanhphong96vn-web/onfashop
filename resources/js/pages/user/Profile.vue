@@ -61,13 +61,14 @@
                             maxlength="10"
                             disabled
                         ></v-text-field>
-                        <p
+                        <!-- Bỏ hiển thị lỗi phone vì đã bỏ validation -->
+                        <!-- <p
                             v-for="error of v$.form.phone.$errors"
                             :key="error.$uid"
                             class="text-red"
                         >
                             {{ error.$message }}
-                        </p>
+                        </p> -->
 
                         <!-- <label>{{ $t("old_password") }}</label>
                         <v-text-field placeholder="******" type="password" v-model="form.oldPassword" :error-messages="oldPasswordErrors" variant="outlined" hide-details="auto" class="mb-3"></v-text-field> -->
@@ -334,15 +335,27 @@ export default {
             //     required
             // },
             // oldPassword: { required},
-            phone: {
-                phoneFormat: (value) => {
-                    if (!value) return true;
-                    // Chỉ chấp nhận số và đúng 10 số
-                    return /^\d{10}$/.test(value);
+            // Bỏ validation cho phone vì đang disabled
+            // phone: {
+            //     phoneFormat: (value) => {
+            //         if (!value) return true;
+            //         // Chỉ chấp nhận số và đúng 10 số
+            //         return /^\d{10}$/.test(value);
+            //     },
+            // },
+            // Chỉ validate password nếu có giá trị (optional)
+            password: {
+                minLength: (value) => {
+                    if (!value) return true; // Không bắt buộc
+                    return value.length >= 6;
                 },
             },
-            password: { minLength: minLength(6) },
-            confirmPassword: { minLength: minLength(6) },
+            confirmPassword: {
+                minLength: (value) => {
+                    if (!value) return true; // Không bắt buộc
+                    return value.length >= 6;
+                },
+            },
 
             // confirmPassword: { sameAsPassword: sameAs('password') }
         },
@@ -379,18 +392,53 @@ export default {
             }
         },
         async updateBasic() {
-            // Validate tất cả fields khi submit
-            this.v$.$touch();
-            const isFormCorrect = await this.v$.$validate();
-            if (!isFormCorrect) return;
+            // Chỉ validate các field trong form profile, không validate AddressDialog
+            // Validate chỉ các field cần thiết
+            this.v$.form.name.$touch();
+            if (this.form.password) {
+                this.v$.form.password.$touch();
+            }
+            if (this.form.confirmPassword) {
+                this.v$.form.confirmPassword.$touch();
+            }
+
+            // Chỉ validate các field của form profile
+            const isNameValid = await this.v$.form.name.$validate();
+            const isPasswordValid =
+                !this.form.password ||
+                (await this.v$.form.password.$validate());
+            const isConfirmPasswordValid =
+                !this.form.confirmPassword ||
+                (await this.v$.form.confirmPassword.$validate());
+
+            // Debug: Kiểm tra validation
+            if (!isNameValid || !isPasswordValid || !isConfirmPasswordValid) {
+                console.log("Validation failed:", {
+                    name: this.v$.form.name.$errors,
+                    password: this.v$.form.password.$errors,
+                    confirmPassword: this.v$.form.confirmPassword.$errors,
+                });
+                return;
+            }
+
+            console.log("Validation passed, calling API...");
 
             // Chỉ lấy số, loại bỏ ký tự đặc biệt
-            this.form.phone = this.form.phone.replace(/\D/g, "");
+            if (this.form.phone) {
+                this.form.phone = this.form.phone.replace(/\D/g, "");
+            }
             this.infoUpdateLoading = true;
 
             let formData = new FormData();
             for (var key in this.form) {
-                formData.append(key, this.form[key]);
+                // Chỉ gửi password nếu có giá trị
+                if (key === "password" || key === "confirmPassword") {
+                    if (this.form[key]) {
+                        formData.append(key, this.form[key]);
+                    }
+                } else {
+                    formData.append(key, this.form[key]);
+                }
             }
 
             const res = await this.call_api(
@@ -403,6 +451,9 @@ export default {
             if (res.data.success) {
                 this.setUser(res.data.user);
                 this.snack({ message: res.data.message });
+                // Xóa password sau khi update thành công
+                this.form.password = "";
+                this.form.confirmPassword = "";
             } else {
                 this.snack({ message: res.data.message, color: "red" });
             }

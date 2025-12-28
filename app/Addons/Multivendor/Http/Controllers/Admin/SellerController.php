@@ -52,11 +52,11 @@ class SellerController extends Controller
             $sort_search = $request->search;
             $shops = $shops->where(function($q) use ($sort_search) {
                 $q->where('name', 'like', '%' . $sort_search . '%')
-                  ->orWhere('phone', 'like', '%' . $sort_search . '%')
-                  ->orWhereHas('user', function ($query) use ($sort_search) {
-                      $query->where('name', 'like', '%' . $sort_search . '%');
+                ->orWhere('phone', 'like', '%' . $sort_search . '%')
+                ->orWhereHas('user', function ($query) use ($sort_search) {
+                    $query->where('name', 'like', '%' . $sort_search . '%');
                   });
-            });
+                });
         }
 
         $shops = $shops->latest()->paginate(15);

@@ -1,6 +1,6 @@
 {
-    "name": "The Shop",
-    "short_name": "The Shop",
+    "name": "OnfaShop",
+    "short_name": "OnfaShop",
     "scope": "/",
     "start_url": "/",
     "display": "standalone",

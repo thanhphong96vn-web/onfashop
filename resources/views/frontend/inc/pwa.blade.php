@@ -6,13 +6,13 @@
 
 <!-- Add to homescreen for Chrome on Android -->
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="application-name" content="The Shop">
+<meta name="application-name" content="OnfaShop">
 <link rel="icon" sizes="512x512" href="{{ uploaded_asset(get_setting('site_icon')) }}">
 
 <!-- Add to homescreen for Safari on iOS -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="apple-mobile-web-app-title" content="The Shop">
+<meta name="apple-mobile-web-app-title" content="OnfaShop">
 <link rel="apple-touch-icon" href="{{ uploaded_asset(get_setting('site_icon')) }}">
 
 
@@ -41,7 +41,7 @@
             // console.log('Laravel PWA: ServiceWorker registration successful with scope: ', registration.scope);
         }, function (err) {
             // registration failed :(
-            console.log('The Shop PWA: ServiceWorker registration failed: ', err);
+            console.log('OnfaShop PWA: ServiceWorker registration failed: ', err);
         });
     }
 </script>

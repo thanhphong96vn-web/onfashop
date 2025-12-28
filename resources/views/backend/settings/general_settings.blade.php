@@ -157,7 +157,7 @@
                             <label class="col-sm-3 col-from-label">{{ translate('Minimum order amount') }}</label>
                             <div class="col-sm-9">
                                 <input type="number" class="form-control" name="min_order" min="0"
-                                    step="0.01" value="{{ auth()->user()->shop->min_order }}" required>
+                                    step="0.01" value="{{ auth()->user()->shop->min_order ?? 0 }}" required>
                                 <small
                                     class="text-muted">{{ translate('Customer need to purchase minimum this amount of admin shop products to place an order.') }}</small>
                             </div>

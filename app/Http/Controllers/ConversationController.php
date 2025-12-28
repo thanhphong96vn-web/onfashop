@@ -58,4 +58,16 @@ class ConversationController extends Controller
         flash(translate('Message has been sent'))->success();
         return back();
     }
+
+    public function refresh(Request $request)
+    {
+        $conversation = Conversation::findOrFail(decrypt($request->id));
+        if ($conversation->sender_id == Auth::user()->id) {
+            $conversation->sender_viewed = 1;
+        } elseif ($conversation->receiver_id == Auth::user()->id) {
+            $conversation->receiver_viewed = 1;
+        }
+        $conversation->save();
+        return view('backend.conversations.refresh', compact('conversation'));
+    }
 }

@@ -16,7 +16,7 @@
 
     <!-- Favicon -->
     <link rel="icon" sizes="512x512" href="{{ uploaded_asset(get_setting('site_icon')) }}">
-    <title>{{get_setting('site_name') ?? 'The Shop' }}</title>
+    <title>{{get_setting('site_name') ?? 'OnfaShop' }}</title>
 
     <!-- google font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

@@ -7,7 +7,7 @@
                     <div class="card-body">
                         <div class="mar-ver pad-btm text-center">
                             <img src="{{ static_asset('assets/img/logo.png') }}" class="mb-4">
-                            <h1 class="h3">The Shop Settings</h1>
+                            <h1 class="h3">OnfaShop Settings</h1>
                             <p>Fill this form with basic information & admin login credentials</p>
                         </div>
                         <p class="text-muted font-13">

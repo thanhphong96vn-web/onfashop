@@ -228,7 +228,12 @@ export default {
             this.topBannerVisible = true;
         }
         this.fetchWislistProducts();
-        this.fetchProductQuerries();
+        // Only fetch conversations if user is authenticated
+        // SellerChat component will handle its own refresh interval
+        if (this.isAuthenticated) {
+            this.fetchProductQuerries();
+        }
+        // Commented out: No need for interval here, SellerChat handles it
         // setInterval(() => {
         //   this.fetchProductQuerries();
         // }, 8000);

@@ -7,7 +7,7 @@
                     <div class="card-body">
                         <div class="mar-ver pad-btm text-center">
                             <img src="{{ static_asset('assets/img/logo.png') }}" class="mb-4">
-                            <h1 class="h3">The Shop Update Process</h1>
+                            <h1 class="h3">OnfaShop Update Process</h1>
                         </div>
                         <div class="text-center">
                             <a href="{{ route('update.step1') }}" class="btn btn-primary text-light">

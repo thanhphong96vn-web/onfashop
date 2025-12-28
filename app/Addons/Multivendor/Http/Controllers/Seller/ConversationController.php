@@ -71,6 +71,6 @@ class ConversationController extends Controller
             $conversation->receiver_viewed = 1;
             $conversation->save();
         }
-        return view('addon:multivendor::seller.conversations.show', compact('conversation'));
+        return view('addon:multivendor::seller.conversations.refresh', compact('conversation'));
     }
 }

@@ -15,7 +15,7 @@
 
 	<!-- Favicon -->
     <link rel="icon" sizes="512x512" href="{{ static_asset('web-assets/img/icons/icon-512x512.png') }}">
-	<title>{{ config('app.name', 'The Shop') }}</title>
+	<title>{{ config('app.name', 'OnfaShop') }}</title>
 
 	<!-- google font -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">

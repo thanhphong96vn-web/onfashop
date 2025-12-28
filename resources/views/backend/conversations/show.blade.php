@@ -63,13 +63,25 @@
 @section('script')
     <script type="text/javascript">
     function refresh_messages(){
-       // $.post('{{ route('querries.refresh') }}', {_token:'{{ @csrf_token() }}', id:'{{ encrypt($conversation->id) }}'}, function(data){
-       //    $('#messages').html(data);
-       // })
+        $.post('{{ route('querries.refresh') }}', {
+            _token:'{{ csrf_token() }}', 
+            id:'{{ encrypt($conversation->id) }}'
+        }, function(data){
+            $('#messages').html(data);
+            // Scroll to bottom after refresh
+            var messagesContainer = document.getElementById('messages');
+            if (messagesContainer) {
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }
+        }).fail(function(xhr, status, error) {
+            console.error('Error refreshing messages:', error);
+        });
     }
-    refresh_messages(); // This will run on page load
+    // Refresh on page load
+    refresh_messages();
+    // Auto refresh every 5 seconds
     setInterval(function(){
-        refresh_messages() // this will run after every 5 seconds
-    }, 10000);
+        refresh_messages();
+    }, 5000);
     </script>
 @endsection

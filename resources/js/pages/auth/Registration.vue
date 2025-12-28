@@ -101,7 +101,7 @@
                                                     .$errors"
                                                 :key="error.$uid"
                                                 class="text-red"
-                                            >
+                                                        >
                                                 {{ error.$message }}
                                             </p>
                                         </div>

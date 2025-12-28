@@ -10,11 +10,11 @@
             <div class="col-md-4">
                 <h1 class="h3">{{ translate('All products') }}</h1>
             </div>
-            <div class="col-md-8 text-md-right">
-                <a href="{{ route('seller.products.create') }}" class="btn btn-primary">
-                    <span>{{ translate('Add New Product') }}</span>
-                </a>
-            </div>
+                <div class="col-md-8 text-md-right">
+                    <a href="{{ route('seller.products.create') }}" class="btn btn-primary">
+                        <span>{{ translate('Add New Product') }}</span>
+                    </a>
+                </div>
         </div>
     </div>
 

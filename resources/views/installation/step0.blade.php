@@ -7,7 +7,7 @@
                     <div class="card-body">
                         <div class="mar-ver pad-btm text-center">
                             <img src="{{ static_asset('assets/img/logo.png') }}" class="mb-4">
-                            <h1 class="h3">The Shop Installation</h1>
+                            <h1 class="h3">OnfaShop Installation</h1>
                             <p>You will need to know the following items before proceeding.</p>
                         </div>
                         <ol class="list-group">
