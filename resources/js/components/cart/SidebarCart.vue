@@ -1,17 +1,8 @@
 <template>
   <div>
-    <button
-      class="side-cart-btn text-center fw-500 fs-12 d-none d-lg-block"
-      @click.stop="updateCartDrawer(true)"
-    >
-      <span class="d-block">
-        <i class="las la-shopping-cart mr-1" />
-        <span>{{ getCartCount }} {{ $t("items") }}</span>
-      </span>
-      <span class="d-block bg-white primary-text rounded mt-1 px-1 py-2 lh-1">{{ format_price(getCartPrice - getTotalCouponDiscount) }}</span>
-    </button>
+    <!-- Keep drawer for mobile or as fallback -->
     <v-navigation-drawer
-      class="cart-drawer"
+      class="cart-drawer d-lg-none"
       location="right"
       width="400"
       height="100vh"

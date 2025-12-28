@@ -1,8 +1,15 @@
+let Cart = () => import("../pages/Cart.vue");
 let Checkout = () => import("../pages/Checkout.vue");
 let GuestCheckout = () => import("../pages/GuestCheckout.vue");
 let OrderConfirmed = () => import("../pages/OrderConfirmed.vue");
 
 export default [
+    {
+        path: "/cart",
+        component: Cart,
+        name: "Cart",
+        meta: { requiresAuth: false },
+    },
     {
         path: "/checkout",
         component: Checkout,
