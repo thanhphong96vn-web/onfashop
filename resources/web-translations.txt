@@ -1,0 +1,490 @@
+Bảng điều khiển
+Danh mục phổ biến
+Ưu đãi hôm nay
+Nhận ưu đãi đặc biệt, mã giảm giá và hơn thế nữa...
+Liên hệ chúng tôi
+Ứng dụng di động
+Địa chỉ
+Tên
+Email
+Số điện thoại
+Đăng ký nhận tin
+Địa chỉ email của bạn
+Quên mật khẩu
+hoặc...
+Play Store
+App Store
+Theo dõi đơn hàng
+Đường dây trợ giúp
+Danh sách yêu thích
+Tìm kiếm
+Đăng nhập
+Đăng ký
+Đăng ký
+Đăng xuất
+Trò chuyện với chúng tôi
+Bạn phải
+với tư cách là khách hàng để liên hệ với chúng tôi
+hoặc
+Phổ biến nhất
+Mới nhất
+Cũ nhất
+Giá cao trước
+Giá thấp trước
+Đánh giá cao trước
+Đánh giá thấp trước
+Tất cả sao
+sao
+Sắp xếp theo
+Sản phẩm
+sản phẩm
+Tổng cộng
+sản phẩm tìm thấy
+Kết quả tìm kiếm cho
+Không tìm thấy sản phẩm
+Giá tối thiểu
+Giá tối đa
+Đi
+Tất cả sản phẩm
+Danh mục
+Bộ lọc
+Giá
+Đơn giá
+Giá đã giảm
+Tổng giá
+Thương hiệu
+Đăng nhập
+Mã đơn hàng
+Theo dõi
+Tất cả danh mục
+Tất cả thương hiệu
+Tất cả ưu đãi
+Thời gian giao hàng dự kiến
+ngày
+Xem các sản phẩm khác
+Thêm vào giỏ hàng
+Xem tất cả
+Một mã xác nhận đã được gửi đến email của bạn.
+Một mã xác nhận đã được gửi đến số điện thoại của bạn.
+Thanh toán thất bại!!
+Đơn hàng của bạn đã được đặt. Nhưng không thể hoàn tất thanh toán. Vui lòng thử lại hoặc liên hệ hỗ trợ.
+Thử lại
+Đóng
+Địa chỉ
+Các địa chỉ
+Mã bưu điện
+Quốc gia
+Bang/Tỉnh
+Chọn quốc gia
+Số điện thoại
+Hủy
+Cập nhật
+Thêm mới
+Chọn thành phố
+Chọn bang/tỉnh
+Trường này là bắt buộc.
+Trường này yêu cầu một email hợp lệ.
+Mật khẩu phải có tối thiểu 6 ký tự.
+Mật khẩu và xác nhận mật khẩu phải khớp nhau.
+Đã có lỗi xảy ra
+Đăng nhập bằng
+Tài khoản
+Địa chỉ email
+hoặc
+Đăng ký
+Chưa có tài khoản
+Đã có tài khoản
+Tìm kiếm...
+Không
+Có
+mặt hàng
+Có mã giảm giá?
+Thay đổi
+Áp dụng
+Thanh toán
+Vui lòng chọn một sản phẩm trong giỏ hàng
+Đã đặt hàng
+Đã xác nhận
+Đã gửi hàng
+Đã giao hàng
+Tóm tắt đơn hàng
+Địa chỉ giao hàng
+Tổng số tiền đơn hàng
+Phương thức thanh toán
+Trạng thái thanh toán
+Địa chỉ thanh toán
+Chi tiết đơn hàng
+Số lượng
+Thuế
+Thuế đơn vị
+Tổng phụ
+Phí vận chuyển
+Giảm giá
+Mã giảm giá
+GIẢM
+Còn hàng
+Hết hàng
+Hết
+Đánh giá
+Đánh giá sản phẩm
+Sắp xếp
+Không tìm thấy đánh giá nào cho sản phẩm này
+Lịch sử mua hàng
+Danh sách yêu thích
+Quản lý hồ sơ
+Ví của tôi
+Tùy chọn thanh toán
+Số tiền nạp
+Nạp tiền vào ví
+Vui lòng chọn một phương thức thanh toán
+Vui lòng nhập số tiền nạp
+Số tiền
+QUÊN
+Mật khẩu
+Mật khẩu cũ
+Nhập địa chỉ email để khôi phục mật khẩu
+Nhập số điện thoại để khôi phục mật khẩu
+Nhập địa chỉ email hoặc số điện thoại để khôi phục mật khẩu
+Gửi mã đặt lại mật khẩu
+Quay lại
+ĐẶT LẠI
+Mã
+Nhập địa chỉ email, Mã & Mật khẩu mới
+Nhập số điện thoại, Mã & Mật khẩu mới
+Xác nhận mật khẩu
+Đặt lại mật khẩu
+CHÀO MỪNG ĐẾN VỚI
+Họ và tên
+Số điện thoại phải hợp lệ.
+Bằng cách đăng ký, bạn đồng ý với
+điều khoản và điều kiện
+Tạo tài khoản
+Tham gia cùng
+Chưa có tài khoản
+XÁC MINH
+Nhập địa chỉ email, mã xác nhận
+Nhập số điện thoại, mã xác nhận
+Xác minh
+Gửi lại mã
+TRANG BẠN ĐANG TÌM KIẾM KHÔNG CÓ
+TRÊN HÀNH TINH NÀY
+QUAY LẠI TRANG CHỦ
+Sản phẩm mới thêm
+Số dư ví
+Lần nạp cuối
+Sản phẩm trong giỏ hàng
+Sản phẩm trong danh sách yêu thích
+Sản phẩm bạn đã đặt
+Lịch sử mua hàng gần đây
+Danh sách yêu thích của tôi
+Địa chỉ giao hàng mặc định
+Thêm địa chỉ mới
+Đã xem gần đây
+Hồ sơ
+Thông tin hồ sơ
+Mật khẩu mới
+Ảnh đại diện
+Chọn ảnh
+Địa chỉ giao hàng mặc định
+Địa chỉ thanh toán mặc định
+Tất cả địa chỉ
+Chỉnh sửa
+Đặt làm địa chỉ giao hàng mặc định
+Đặt làm địa chỉ thanh toán mặc định
+Xóa
+Không có địa chỉ đã lưu
+Đang tải... Vui lòng đợi
+Chi tiết
+Trạng thái giao hàng
+Tùy chọn
+Đang tạo hóa đơn...
+Xác nhận hủy
+Bạn có chắc chắn muốn hủy đơn hàng này không?
+Đang hủy đơn hàng...
+Lịch sử nạp tiền vào ví
+Ngày
+Không có sản phẩm nào trong danh sách yêu thích
+Tùy chọn giao hàng
+Giao hàng tiêu chuẩn
+Chi phí giao hàng
+Thời gian giao hàng
+Giao hàng hỏa tốc
+Rất tiếc, dịch vụ giao hàng không khả dụng tại địa chỉ này.
+TỔNG CỘNG THANH TOÁN
+Số dư ví của bạn
+Số dư còn lại
+Bằng cách nhấp vào tiếp tục, tôi đồng ý với
+Tiếp tục
+Cảm ơn bạn đã đặt hàng
+Một bản tóm tắt đơn hàng đã được gửi đến
+Xóa khỏi danh sách yêu thích
+Thêm vào danh sách yêu thích
+Hỏi về sản phẩm này
+Chia sẻ
+Đánh giá & Nhận xét
+Mô tả
+Thường được mua cùng nhau
+Xem thêm các mặt hàng khác
+Có bảo hành
+Xem chính sách bảo hành
+Sản phẩm liên quan
+Vui lòng chọn tất cả các tùy chọn
+Sản phẩm này đã hết hàng
+Bạn cần mua số lượng tối thiểu là
+Bạn có thể mua số lượng tối đa là
+Sản phẩm đã được thêm vào giỏ hàng.
+Theo dõi đơn hàng của bạn
+Nạp tiền vào ví thành công!
+Nạp tiền vào ví thất bại!
+Đăng nhập thành công.
+Mã giảm giá đã áp dụng không khả dụng cho các sản phẩm trong giỏ hàng của bạn.
+Tổng giá trị đơn hàng tối thiểu là
+được yêu cầu để sử dụng mã giảm giá này.
+Loại giao hàng
+Đánh giá sản phẩm đã mua
+Gửi
+Viết đánh giá
+Xem chi tiết
+Tải hóa đơn
+Hủy đơn hàng
+Đã hủy
+Sản phẩm này hiện không khả dụng.
+Đánh giá
+Bình luận
+Bạn đã đánh giá sản phẩm này rồi. Bạn có thể cập nhật đánh giá.
+Đánh giá của bạn đã bị vô hiệu hóa.
+Trang chủ
+Tin nhắn
+Giỏ hàng
+Tài khoản
+Thay đổi ngôn ngữ
+Xem thêm
+Xem bớt
+Mua ngay
+Giỏ hàng của bạn đang trống. Hãy bắt đầu mua sắm.
+Mã giảm giá
+Sao chép mã
+Mã đã được sao chép vào bộ nhớ tạm
+Thanh toán bằng ví
+Trở thành người bán với
+Tất cả cửa hàng
+Ghé thăm cửa hàng
+Theo dõi
+Bỏ theo dõi
+Bán từ ngày
+Tổng sản phẩm
+Đánh giá
+Tất cả cửa hàng
+Sản phẩm nổi bật
+Hàng mới về
+Đánh giá tốt nhất
+Bán chạy nhất
+Cửa hàng
+Xem tất cả sản phẩm của cửa hàng này
+Tất cả mã giảm giá
+Cửa hàng
+Cửa hàng đang theo dõi
+Không tìm thấy cửa hàng đang theo dõi
+Số lượng
+Sắp xếp theo thương hiệu
+Sắp xếp theo danh mục
+Không có dữ liệu
+Trở thành người bán
+Khu vực người bán
+Đăng nhập vào bảng điều khiển người bán
+Đã là người bán?
+Đăng ký cửa hàng của bạn
+Thông tin cá nhân
+Thông tin cửa hàng
+Đăng ký cửa hàng
+Thông tin
+Số lượng sản phẩm hoàn trả không thể lớn hơn số lượng sản phẩm đã đặt
+Thông tin hoàn tiền
+Số tiền hoàn trả
+Lý do hoàn tiền
+Ghi chú hoàn tiền
+Tệp đính kèm
+Yêu cầu hoàn tiền
+cửa hàng
+Chúc mừng! Bạn đã đạt mức giá trị đơn hàng tối thiểu.
+Bạn cần đạt mức
+để đặt hàng từ cửa hàng này.
+để đặt hàng từ
+Đang tải, vui lòng đợi
+Trạng thái
+Tạo yêu cầu hoàn tiền mới
+Yêu cầu hoàn tiền
+Đang chờ
+Đã chấp nhận
+Đã từ chối
+Chọn một
+Chọn ảnh
+Vui lòng chọn một sản phẩm
+Hành động
+Lịch sử ví
+Đã thêm
+Đã trừ
+Hành động
+Chúng tôi sẽ phản hồi sớm nhất có thể
+Thông tin theo dõi
+Tên đơn vị vận chuyển
+Số theo dõi
+URL theo dõi
+Theo dõi
+sử dụng điện thoại thay thế
+Cuộc trò chuyện
+Không tìm thấy cuộc trò chuyện nào
+Cuộc trò chuyện của tôi
+Nhắn tin cho người bán
+Bất kỳ câu hỏi nào về sản phẩm này
+Tên sản phẩm
+Câu hỏi
+Gửi
+Tiêu đề
+Tin nhắn đã được gửi đến người bán
+Trò chuyện với
+Hỏi về sản phẩm này
+Câu hỏi về sản phẩm
+Các câu hỏi về sản phẩm
+Câu hỏi của tôi
+Mới
+Câu hỏi với
+Liên hệ quản trị viên
+Chi tiết tài khoản
+Số định tuyến (Routing Number)
+Số tài khoản
+Tên tài khoản
+Tên ngân hàng
+Thông tin ngân hàng
+Tên thanh toán
+Loại thanh toán
+Mã giao dịch
+Vui lòng nhập mã giao dịch
+Thêm biên lai
+Nạp tiền vào ví thành công
+Vui lòng chờ phê duyệt
+Biên lai
+Chi tiết thanh toán
+Thanh toán qua
+Tất cả bài viết
+Đọc toàn bộ bài viết
+Mạng xã hội
+Bài viết gần đây
+Không tìm thấy bài viết nào
+Vui lòng nhập mã CVV
+Vui lòng nhập số thẻ hợp lệ
+Chọn tháng
+Chọn năm
+Tích điểm
+Điểm của tôi
+Tỷ giá quy đổi
+Điểm
+Tiền trong ví
+Lịch sử tích điểm
+Mã đơn hàng
+Điểm
+Đã quy đổi
+Ngày
+Hành động
+Điểm
+Có
+Quy đổi ngay
+Không
+Xong
+Đã chuyển đổi điểm thưởng sang ví thành công
+Quy đổi điểm thưởng sang ví?
+Điểm thưởng
+Tổng điểm thưởng
+Đơn hàng chưa được thanh toán
+Rất tiếc, không tìm thấy gì.
+Gợi ý phổ biến
+sản phẩm
+Gợi ý danh mục
+So sánh
+Danh sách so sánh của tôi
+Đặt lại danh sách
+Danh sách sản phẩm so sánh đang trống
+Tải về
+Tải về sản phẩm của bạn
+Trở thành đối tác tiếp thị liên kết
+Thông tin tiếp thị liên kết
+Tên của bạn
+Email của bạn
+Địa chỉ đầy đủ
+Cách bạn sẽ tiếp thị
+Tiếp thị liên kết
+Số dư tiếp thị liên kết
+Trạng thái tiếp thị liên kết
+Lịch sử thu nhập tiếp thị
+Lịch sử thanh toán tiếp thị
+Thông tin tiếp thị liên kết
+Yêu cầu rút tiền tiếp thị
+Lịch sử yêu cầu rút tiền tiếp thị
+Số lượng mặt hàng
+Số lượng đã giao
+Số lượng đã hủy
+Số lượt nhấp
+Cấu hình thanh toán
+Cài đặt thanh toán
+Cách bạn sẽ tiếp thị
+Chính sách bảo mật
+Chính sách trả hàng
+Và
+Sao chép liên kết quảng bá
+Danh sách so sánh
+Tất cả thông báo
+Xem tất cả thông báo
+Đã là
+Hoàn thành giao hàng
+Đang chờ giao hàng
+Tổng thu hộ
+Thu nhập
+Danh sách thu nhập
+Danh sách thu hộ
+Tổng thu nhập
+Đã lấy hàng
+Lịch sử giao hàng được chỉ định
+Lịch sử giao hàng đã lấy
+Lịch sử giao hàng đang trên đường giao
+Giao hàng được chỉ định
+Các đơn giao hàng được chỉ định
+Các đơn giao hàng đã hoàn thành
+Đơn hàng đã lấy
+Các đơn giao hàng đã lấy
+Các đơn giao hàng đã lấy
+Đơn hàng đang trên đường giao
+Các đơn giao hàng đang trên đường giao
+Đơn hàng đang chờ giao
+Các đơn giao hàng đang chờ giao
+Đơn hàng đã hủy
+Các đơn giao hàng đã hủy
+Yêu cầu hủy
+Tổng thu hộ
+Lịch sử thu nhập
+Đăng ký tiếp thị liên kết thành công
+Vui lòng chờ quản trị viên phê duyệt
+Sao chép liên kết quảng bá
+Cách bạn sẽ tiếp thị
+Đã sao chép liên kết thành công
+Lịch sử thu hộ
+Vui lòng đăng nhập tài khoản khách hàng trước để thêm sản phẩm vào giỏ hàng
+Trang đăng nhập của nhân viên giao hàng
+Đây chỉ dành cho nhân viên giao hàng đăng nhập
+Đặt lại đơn hàng
+Điểm lấy hàng
+Giao hàng tận nhà
+Lấy hàng trực tiếp
+Liên hệ với người bán
+Có thể lấy hàng trực tiếp
+Xem chính sách lấy hàng
+Thương hiệu
+Hình ảnh
+Thanh toán ngay
+Phonepe
+Payhere
+MyFatoorah
+Email Paypal
+Thông tin ngân hàng
+Chuyển đổi sang ví
+Chuyển số dư tiếp thị sang ví
+Đăng nhập với tư cách nhân viên giao hàng

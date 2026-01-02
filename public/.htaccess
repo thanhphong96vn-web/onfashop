@@ -1,0 +1,89 @@
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    RewriteEngine On
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Block access to sensitive directories
+    RewriteRule ^app/.*$ - [F,L]
+    RewriteRule ^bootstrap/.*$ - [F,L]
+    RewriteRule ^config/.*$ - [F,L]
+    RewriteRule ^database/.*$ - [F,L]
+    RewriteRule ^routes/.*$ - [F,L]
+    RewriteRule ^storage/(?!app/public/).*$ - [F,L]
+    RewriteRule ^vendor/.*$ - [F,L]
+    RewriteRule ^resources/.*$ - [F,L]
+
+    # CRITICAL: Serve existing files directly FIRST (before Laravel routing)
+    # This MUST be first to serve assets after rewrite from root .htaccess
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule ^(.*)$ - [L]
+
+    # CRITICAL: Redirect /public/* requests to /onfashop/public/*
+    RewriteCond %{REQUEST_URI} ^/public/
+    RewriteCond %{DOCUMENT_ROOT}/onfashop%{REQUEST_URI} -f
+    RewriteRule ^public/(.*)$ /onfashop/public/$1 [L]
+
+    # Handle serviceworker.js from root
+    RewriteCond %{REQUEST_URI} ^/serviceworker\.js$
+    RewriteCond %{DOCUMENT_ROOT}/onfashop/public/serviceworker.js -f
+    RewriteRule ^serviceworker\.js$ /onfashop/public/serviceworker.js [L]
+
+    # Handle Vite build assets (app-xxx.css, app_xxx.js) from root
+    RewriteCond %{REQUEST_URI} ^/(app-[a-f0-9]+\.(css|js)|app_[a-f0-9]+\.js)$
+    RewriteCond %{DOCUMENT_ROOT}/onfashop/public/build/%{REQUEST_URI} -f
+    RewriteRule ^(.*)$ /onfashop/public/build/$1 [L]
+
+    # Handle /onfashop subdirectory
+    # API routes for /onfashop
+    RewriteCond %{REQUEST_URI} ^/onfashop/api/
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^onfashop/api/(.*)$ onfashop/public/index.php [L]
+
+    # All other /onfashop requests to Laravel
+    RewriteCond %{REQUEST_URI} ^/onfashop/
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^onfashop/(.*)$ onfashop/public/index.php [L]
+
+    # Redirect Trailing Slashes
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # Send All Other Requests To Front Controller
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>
+
+# MIME types
+<IfModule mod_mime.c>
+    AddType application/javascript js mjs
+    AddType application/javascript module
+    AddType text/css css
+</IfModule>
+
+# CORS Headers
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+    Header set Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With"
+</IfModule>
+
+# Security
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+<Files .env>
+    Order allow,deny
+    Deny from all
+</Files>

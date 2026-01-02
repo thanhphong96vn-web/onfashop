@@ -1,0 +1,13 @@
+SỬA FILE .ENV TRÊN HOSTING:
+
+Thay đổi 2 dòng cuối từ:
+VITE_PUSHER_APP_KEY="${PUSHER_APP_KEY}"
+VITE_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
+
+Thành:
+VITE_PUSHER_APP_KEY=3f1856db39ffcf980bca
+VITE_PUSHER_APP_CLUSTER=ap1
+
+Lý do: Laravel không tự động expand biến môi trường trong .env file.
+Phải hardcode giá trị để build frontend hoạt động đúng.
+
