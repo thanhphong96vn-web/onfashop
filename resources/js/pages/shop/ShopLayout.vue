@@ -78,25 +78,37 @@
                 
                 <span class="me-2 opacity-80">({{ shopDetails.reviews_count }} {{ $t('ratings') }})</span>
               </div>
-              <template v-if="isThisFollowed(shopDetails.id)">
+              <div class="d-flex align-center" style="gap: 8px;">
+                <template v-if="isThisFollowed(shopDetails.id)">
+                  <v-btn
+                    elevation="0"
+                    color="grey"
+                    @click="removeFromFollowedShop(shopDetails.id)"
+                    class="white-text darken-1"
+                  >
+                    {{ $t('unfollow') }}
+                  </v-btn>
+                </template>
+                <template v-else>
+                  <v-btn
+                    elevation="0"
+                    color="primary"
+                    @click="addNewFollowedShop(shopDetails.id)"
+                  >
+                    {{ $t('follow') }}
+                  </v-btn>
+                </template>
                 <v-btn
-                  elevation="0"
-                  color="grey"
-                  @click="removeFromFollowedShop(shopDetails.id)"
-                  class="white-text darken-1"
-                >
-                  {{ $t('unfollow') }}
-                </v-btn>
-              </template>
-              <template v-else>
-                <v-btn
+                  v-if="isAuthenticated && generalSettings.conversation_system == 1 && isMultiVendorActivated"
                   elevation="0"
                   color="primary"
-                  @click="addNewFollowedShop(shopDetails.id)"
+                  variant="outlined"
+                  @click="openChatWithShop"
                 >
-                  {{ $t('follow') }}
+                  <i class="las la-comment me-1"></i>
+                  {{ $t('chat') }}
                 </v-btn>
-              </template>
+              </div>
             </div>
           </div>
         </v-container>
@@ -140,10 +152,12 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
+import Mixin from "../../utils/mixin";
 // Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from "swiper/vue";
 export default {
+  mixins: [Mixin],
   components: {
     Swiper,
     SwiperSlide,
@@ -157,9 +171,21 @@ export default {
   }),
   computed: {
     ...mapGetters("follow", ["isThisFollowed"]),
+    ...mapGetters("auth", ["isAuthenticated"]),
+    ...mapGetters("app", ["generalSettings"]),
+    isMultiVendorActivated() {
+      return this.is_addon_activated("multi_vendor");
+    },
   },
   methods: {
     ...mapActions("follow", ["addNewFollowedShop", "removeFromFollowedShop"]),
+    ...mapMutations("auth", ["updateChatWindow"]),
+    openChatWithShop() {
+      // Mở chat window
+      this.updateChatWindow(true);
+      // Có thể thêm logic để tự động tìm hoặc tạo conversation với shop này
+      // Hiện tại chỉ mở chat window, user sẽ cần chọn conversation từ list
+    },
   },
   async created() {
     const res = await this.call_api("get", `shop/${this.$route.params.slug}`);

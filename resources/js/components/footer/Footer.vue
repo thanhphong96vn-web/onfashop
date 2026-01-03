@@ -144,24 +144,24 @@
             <h4 class="primary-text mb-4">{{ $t("mobile_apps") }}</h4>
             <a
               v-if="play_store"
-              :href="data.mobile_app_links?.play_store"
+              href="https://onfashop.site/public/assets/img/play_store.png"
               target="_blank"
               class="d-inline-block pt-2"
             >
               <img
-                :src="static_asset('/assets/img/play_store.png')"
+                src="https://onfashop.site/public/assets/img/play_store.png"
                 class="mw-100"
                 height="40"
               />
             </a>
             <a
               v-if="app_store"
-              :href="data.mobile_app_links?.app_store"
+              href="https://onfashop.site/public/assets/img/app_store.png"
               target="_blank"
               class="d-inline-block pt-2"
             >
               <img
-                :src="static_asset('/assets/img/app_store.png')"
+                src="https://onfashop.site/public/assets/img/app_store.png"
                 class="mw-100"
                 height="40"
               />
@@ -307,25 +307,25 @@
               </v-expansion-panel-title>
               <v-expansion-panel-text class="">
                 <a
-                  :href="data.mobile_app_links?.play_store"
+                  href="https://onfashop.site/public/assets/img/play_store.png"
                   target="_blank"
                   class="d-inline-block pt-2"
                   v-if="play_store"
                 >
                   <img
-                    :src="static_asset('/assets/img/play_store.png')"
+                    src="https://onfashop.site/public/assets/img/play_store.png"
                     class="mw-100"
                     height="40"
                   />
                 </a>
                 <a
-                  :href="data.mobile_app_links?.app_store"
+                  href="https://onfashop.site/public/assets/img/app_store.png"
                   target="_blank"
                   class="d-inline-block pt-2"
                   v-if="app_store"
                 >
                   <img
-                    :src="static_asset('/assets/img/app_store.png')"
+                    src="https://onfashop.site/public/assets/img/app_store.png"
                     class="mw-100"
                     height="40"
                   />

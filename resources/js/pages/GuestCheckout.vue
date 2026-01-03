@@ -49,7 +49,7 @@
                                         <v-text-field
                                             variant="plain"
                                             class="text-field-customer"
-                                            :placeholder="$t('+8801700-000000')"
+                                            :placeholder="$t('+84 922 156755')"
                                             type="text"
                                             v-model="user.phone"
                                             hide-details="auto"

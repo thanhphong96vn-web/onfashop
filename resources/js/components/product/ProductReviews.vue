@@ -182,8 +182,9 @@
               <template v-slot:selection="{ item }">
                 <span class="fs-13 d-flex align-center opacity-80">
                   <i class="las la-exchange-alt la-rotate-90 fs-17"></i>
-                  <span class="opacity-60 mx-1">{{ $t('sort') }}:</span>
-                  <span>{{ item.title }}</span>
+                  <span class="opacity-60 mx-1 d-md-none">{{ $t('sort') }}</span>
+                  <span class="opacity-60 mx-1 d-none d-md-inline">{{ $t('sort') }}:</span>
+                  <span class="d-none d-md-inline">{{ item.title }}</span>
                 </span>
               </template>
             </v-select>
@@ -204,8 +205,9 @@
               <template v-slot:selection="{ item }">
                 <span class="fs-13 d-flex align-center">
                   <i class="las la-filter fs-17 opacity-80"></i>
-                  <span class="opacity-60 mx-1">Filter:</span>
-                  <span>{{ item.title }}</span>
+                  <span class="opacity-60 mx-1 d-md-none">Filter</span>
+                  <span class="opacity-60 mx-1 d-none d-md-inline">Filter:</span>
+                  <span class="d-none d-md-inline">{{ item.title }}</span>
                 </span>
               </template>
             </v-select>

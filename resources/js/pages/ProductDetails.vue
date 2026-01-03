@@ -21,9 +21,9 @@
                         v-else
                         class="shop-info-card bg-white border rounded pa-4 mb-3"
                     >
-                        <div class="d-flex align-center justify-space-between">
+                        <div class="shop-info-container">
                             <!-- Shop Avatar & Info -->
-                            <div class="d-flex align-center flex-grow-1">
+                            <div class="shop-info-left">
                                 <img
                                     :src="productDetails.shop.logo || static_asset('/assets/img/placeholder.jpg')"
                                     :alt="productDetails.shop.name"
@@ -98,7 +98,7 @@
                                 </div>
                             </div>
                             <!-- Action Buttons -->
-                            <div class="d-flex align-center gap-2">
+                            <div class="shop-info-right">
                                 <router-link
                                     :to="{
                                         name: 'ShopDetails',
@@ -807,6 +807,47 @@ export default {
 
 .gap-2 {
     gap: 12px;
+}
+
+/* Shop Info Container - Desktop: horizontal, Mobile: vertical */
+.shop-info-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.shop-info-left {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    margin-bottom: 12px;
+    width: 100%;
+}
+
+.shop-info-right {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+/* Desktop: horizontal layout */
+@media (min-width: 960px) {
+    .shop-info-container {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .shop-info-left {
+        margin-bottom: 0;
+        width: auto;
+        flex-grow: 1;
+    }
+
+    .shop-info-right {
+        width: auto;
+        flex-shrink: 0;
+    }
 }
 
 @media (max-width: 599px) {

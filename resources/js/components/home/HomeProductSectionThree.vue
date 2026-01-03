@@ -87,8 +87,9 @@ h2 {
 .view-more-btn {
     display: inline-block;
     padding: 12px 32px;
-    background-color: #ee4d2d;
-    color: #fff !important;
+    min-width: 200px;
+    background-color: #fdcc35;
+    color: #000000 !important;
     text-decoration: none;
     border-radius: 4px;
     font-weight: 500;
@@ -97,6 +98,7 @@ h2 {
 }
 .view-more-btn:hover {
     background-color: #e23d1d;
+    color: #ffffff !important;
     text-decoration: none;
     transform: translateY(-1px);
     box-shadow: 0 2px 8px rgba(238, 77, 45, 0.3);

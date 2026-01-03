@@ -7,8 +7,9 @@
       />
     </div>
     <div
-      :class="['overflow-hidden', {'rounded border':!noBorder}]"
+      :class="['overflow-hidden', {'rounded border':!noBorder, 'cursor-pointer': true}]"
       v-else
+      @click="goToProductDetails"
     >
       <v-row
         align="center"
@@ -29,6 +30,7 @@
             <router-link
               :to="{ name: 'ProductDetails', params: {slug: productDetails.slug}}"
               class="text-reset d-block lh-0 text-center"
+              @click.stop
             >
               <img
                 :src="productDetails.thumbnail_image"
@@ -57,6 +59,7 @@
               <router-link
                 :to="{ name: 'ProductDetails', params: {slug: productDetails.slug}}"
                 class="text-reset"
+                @click.stop
               >{{ productDetails.name }}</router-link>
             </h5>
             <div
@@ -135,7 +138,7 @@
                    <button
                     v-if="productDetails.is_variant !== 1 || productDetails.variations.length == 1"
                     class="text-reset py-1 lh-1 align-center d-flex"
-                    @click="buyNow"
+                    @click.stop="buyNow"
                   >
                     <i class="las la-shopping-cart fs-20 ts-05 me-1"></i>
                     <span  class="fw-700 fs-13">{{ $t('buy_now') }}</span>
@@ -143,7 +146,7 @@
                   <button
                     v-if="productDetails.is_variant == 1 && productDetails.variations.length > 1"
                     class="text-reset py-1 lh-1 align-center d-flex"
-                    @click="showAddToCartDialog({status:true,slug:productDetails.slug})"
+                    @click.stop="showAddToCartDialog({status:true,slug:productDetails.slug})"
                   >
                     <i class="las la-shopping-cart fs-20 ts-05 me-1"></i>
                     
@@ -172,14 +175,14 @@
                 <template v-if="isThisWishlisted(productDetails.id)">
                   <button
                     class="text-primary pa-1 lh-1"
-                    @click="removeFromWishlist(productDetails.id)"
+                    @click.stop="removeFromWishlist(productDetails.id)"
                     type="button"
                   ><i class="la la-heart ts-02 fs-18"></i></button>
                 </template>
                 <template v-else>
                   <button
                     class="text-primary pa-1 lh-1"
-                    @click="addNewWishlist(productDetails.id)"
+                    @click.stop="addNewWishlist(productDetails.id)"
                     type="button"
                   ><i class="la la-heart-o ts-02 fs-18"></i></button>
                 </template>
@@ -191,7 +194,7 @@
                       <button
                         v-bind="props"
                         class="text-primary pa-1 lh-1"
-                        @click="RemoveComparedListProduct(productDetails.id)"
+                        @click.stop="RemoveComparedListProduct(productDetails.id)"
                         type="button"
                       ><i class="las la-times"></i></button>
                     </template>
@@ -204,7 +207,7 @@
                       <button
                         v-bind="props"
                         class="text-primary pa-1 lh-1"
-                        @click="addNewComparedList(productDetails.id)"
+                        @click.stop="addNewComparedList(productDetails.id)"
                         type="button"
                       ><i class="las la-sync ts-02 fs-18"></i></button>
                     </template>
@@ -311,6 +314,9 @@ export default {
         }
       }
     },
+    goToProductDetails() {
+      this.$router.push({ name: 'ProductDetails', params: { slug: this.productDetails.slug } });
+    },
   },
 };
 </script>
@@ -329,5 +335,10 @@ export default {
 .rounded.border {
   border: 1px solid transparent;
   transition: border-color 0.3s ease;
+}
+
+/* Cursor pointer cho product box */
+.cursor-pointer {
+  cursor: pointer;
 }
 </style>

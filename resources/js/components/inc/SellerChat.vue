@@ -514,21 +514,20 @@ export default {
                 // Get from store
                 const rawConversations = this.getProductQuerries || [];
 
-                // Loại bỏ duplicate conversations dựa trên receiver_id (shop)
-                // Mỗi shop (receiver_id) chỉ hiển thị 1 conversation (conversation mới nhất)
+                // Loại bỏ duplicate conversations dựa trên receiver_id hoặc receiver_shop (shop)
+                // Mỗi shop chỉ hiển thị 1 conversation (conversation mới nhất)
                 const conversationsByShop = new Map();
                 for (const conv of rawConversations) {
-                    if (!conv.receiver_id) {
-                        // Nếu không có receiver_id, giữ nguyên (fallback: dùng ID)
-                        const key = 'no_receiver_' + conv.id;
-                        if (!conversationsByShop.has(key)) {
-                            conversationsByShop.set(key, conv);
-                        }
-                        continue;
+                    // Tạo key để identify shop: ưu tiên receiver_id, sau đó receiver_shop, cuối cùng là ID
+                    let shopKey = null;
+                    if (conv.receiver_id) {
+                        shopKey = 'receiver_id_' + conv.receiver_id;
+                    } else if (conv.receiver_shop) {
+                        shopKey = 'receiver_shop_' + conv.receiver_shop;
+                    } else {
+                        // Fallback: dùng ID nếu không có receiver_id hoặc receiver_shop
+                        shopKey = 'conv_id_' + conv.id;
                     }
-                    
-                    // Tạo key dựa trên receiver_id (shop)
-                    const shopKey = conv.receiver_id;
                     
                     const existing = conversationsByShop.get(shopKey);
                     if (!existing) {
@@ -541,12 +540,24 @@ export default {
                         // Parse timestamp để so sánh (format: "h:i:m d-m-Y")
                         let shouldReplace = false;
                         if (newTime && existingTime) {
-                            // So sánh string timestamp
-                            if (newTime > existingTime) {
-                                shouldReplace = true;
-                            } else if (newTime === existingTime) {
-                                // Nếu cùng timestamp, giữ conversation có ID lớn hơn (mới hơn)
-                                if (conv.id > existing.id) {
+                            // So sánh string timestamp (format: "h:i:m d-m-Y")
+                            // Convert sang timestamp để so sánh chính xác hơn
+                            try {
+                                const existingTimestamp = new Date(existingTime.split(' ').reverse().join('-') + ' ' + existingTime.split(' ')[0]).getTime();
+                                const newTimestamp = new Date(newTime.split(' ').reverse().join('-') + ' ' + newTime.split(' ')[0]).getTime();
+                                if (newTimestamp > existingTimestamp) {
+                                    shouldReplace = true;
+                                } else if (newTimestamp === existingTimestamp) {
+                                    // Nếu cùng timestamp, giữ conversation có ID lớn hơn (mới hơn)
+                                    if (conv.id > existing.id) {
+                                        shouldReplace = true;
+                                    }
+                                }
+                            } catch (e) {
+                                // Fallback: so sánh string nếu parse lỗi
+                                if (newTime > existingTime) {
+                                    shouldReplace = true;
+                                } else if (newTime === existingTime && conv.id > existing.id) {
                                     shouldReplace = true;
                                 }
                             }
@@ -581,10 +592,34 @@ export default {
                         raw: rawConversations.length,
                         unique: uniqueConversations.length,
                         duplicates: rawConversations.length - uniqueConversations.length,
-                        rawConversations: rawConversations.map(c => ({ id: c.id, receiver_id: c.receiver_id, receiver_name: c.receiver_name || c.receiver_shop })),
-                        uniqueConversations: uniqueConversations.map(c => ({ id: c.id, receiver_id: c.receiver_id, receiver_name: c.receiver_name || c.receiver_shop }))
+                        rawConversations: rawConversations.map(c => ({ 
+                            id: c.id, 
+                            receiver_id: c.receiver_id, 
+                            receiver_name: c.receiver_name, 
+                            receiver_shop: c.receiver_shop,
+                            latest_message_time: c.latest_message_time
+                        })),
+                        uniqueConversations: uniqueConversations.map(c => ({ 
+                            id: c.id, 
+                            receiver_id: c.receiver_id, 
+                            receiver_name: c.receiver_name, 
+                            receiver_shop: c.receiver_shop,
+                            latest_message_time: c.latest_message_time
+                        }))
                     });
                 }
+                
+                // Debug: Log tất cả conversations để kiểm tra
+                console.log('Conversations after deduplication:', {
+                    total: uniqueConversations.length,
+                    conversations: uniqueConversations.map(c => ({
+                        id: c.id,
+                        receiver_id: c.receiver_id,
+                        receiver_name: c.receiver_name,
+                        receiver_shop: c.receiver_shop,
+                        latest_message_time: c.latest_message_time
+                    }))
+                });
 
                 // So sánh bằng hash - nhanh hơn JSON.stringify
                 const newHash = this.createConversationsHash(uniqueConversations);
@@ -1118,7 +1153,8 @@ export default {
     overflow-x: hidden;
     padding: 16px;
     height: calc(100% - 20px);
-    min-height: 270px;
+    min-height: 400px;
+    max-height: 400px;
     scroll-behavior: smooth;
     flex-shrink: 1; /* Cho phép shrink để nhường chỗ cho input */
 }

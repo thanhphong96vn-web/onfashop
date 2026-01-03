@@ -24,35 +24,38 @@
       <template v-if="!isLoading">
         <h1 class="fs-21 opacity-80 mb-3 lh-1-3"> {{ productDetails.name }} </h1>
 
-        <div class="d-flex fs-12 ">
-          <span class="me-3 opacity-50">{{ productDetails.review_summary.average.toFixed(2) }}</span>
-          <v-rating
-            class="lh-1-5 "
-            background-color=""
-            empty-icon="las la-star"
-            full-icon="las la-star active"
-            half-icon="las la-star half"
-            hover
-            half-increments
-            readonly
-            length="5"
-            :model-value="productDetails.review_summary.average"
-            size="x-small"
-          >
-          </v-rating>
-           
-          <span class="ms-3 opacity-50"> ({{ productDetails.review_summary.total_count }} {{ $t("ratings") }}) </span>
+        <div class="fs-12">
+          <!-- Rating Section -->
+          <div class="d-flex align-center mb-2 d-md-inline-flex mb-md-0">
+            <span class="me-3 opacity-50">{{ productDetails.review_summary.average.toFixed(2) }}</span>
+            <v-rating
+              class="lh-1-5 "
+              background-color=""
+              empty-icon="las la-star"
+              full-icon="las la-star active"
+              half-icon="las la-star half"
+              hover
+              half-increments
+              readonly
+              length="5"
+              :model-value="productDetails.review_summary.average"
+              size="x-small"
+            >
+            </v-rating>
+             
+            <span class="ms-3 opacity-50"> ({{ productDetails.review_summary.total_count }} {{ $t("ratings") }}) </span>
+          </div>
 
-          <!-- todo:: message seller -->
+          <!-- Contact Seller Section -->
           <div
             v-if="generalSettings.conversation_system == 1 && is_addon_activated('multi_vendor') && currentUser.user_type == 'customer'"
-            class="ms-auto"
+            class="mb-0 d-md-inline-block mb-md-0"
           >
             <button
               class="primary-text pa-1 lh-1 d-flex align-center"
               @click="showConversationDialog({status:true})"
             >
-              <i class="las la-comment ts-02 fs-14 me-1"></i>
+              <i class="las la-comment ts-02 fs-14 me-1" style="display: inline-block; vertical-align: middle; line-height: 1;"></i>
               <span class="fw-700">{{ $t("contact_to_seller") }}</span>
             </button>
           </div>
@@ -60,8 +63,9 @@
           <conversation-dialog :product="productDetails" />
           <!-- message seller -->
 
+          <!-- Wishlist Section -->
           <div
-            :class="['ms-2', { 'ms-auto': generalSettings.conversation_system != 1 }, { 'ms-auto': !is_addon_activated('multi_vendor') }]"
+            class="mb-2 d-md-inline-block mb-md-0"
             v-if="currentUser.user_type == 'customer'"
           >
             <template v-if="isThisWishlisted(productDetails.id)">
@@ -69,16 +73,16 @@
                 class="primary-text pa-1 lh-1 d-flex align-center"
                 @click="removeFromWishlist(productDetails.id)"
               >
-                <i class="las la-heart ts-02 fs-14 me-1"></i>
+                <i class="las la-heart ts-02 fs-14 me-1" style="display: inline-block; vertical-align: middle; line-height: 1;"></i>
                 <span class="fw-700">{{ $t("remove_from_wishlist") }}</span>
               </button>
             </template>
             <template v-else>
               <button
-                class="primary-text pa-1 lh-1 d-flex align-center" style="margin-top: 2px;"
+                class="primary-text pa-1 lh-1 d-flex align-center"
                 @click="addNewWishlist(productDetails.id)"
               >
-                <i class="las la-heart-o ts-02 fs-14 me-1"></i>
+                <i class="las la-heart ts-02 fs-14 me-1" style="display: inline-block; vertical-align: middle; line-height: 1;"></i>
                 <span class="fw-700">{{ $t("add_to_wishlist") }}</span>
               </button>
             </template>
@@ -126,11 +130,11 @@
           v-if="discount > 0"
           class="lh-1"
         >
-          <v-row>
+          <v-row style="align-items: center">
             <v-col
               cols="3"
               lg="2"
-              class="py-2"
+              class="py-2 "
             >
               <span class="opacity-60 fs-12">{{ $t("price") }}</span>
             </v-col>
@@ -231,7 +235,7 @@
               </div>
             </v-col>
           </v-row>
-          <v-row>
+          <v-row class="items-center">
             <v-col
               cols="3"
               lg="2"
@@ -266,7 +270,7 @@
           v-else
           class="lh-1"
         >
-          <v-row>
+          <v-row style="align-items: center">
             <v-col
               cols="3"
               lg="2"
@@ -293,8 +297,11 @@
                 v-if="productDetails.unit"
                 class="fs-12 opacity-50 ms-1"
               >/{{ productDetails.unit }}</span>
-              <span class="bg-primary rounded-sm text-white px-2 h-15px ms-1">
-                <span v-if="generalSettings.club_point == 1">
+              <span 
+                v-if="generalSettings.club_point == 1"
+                class="bg-primary rounded-sm text-white px-2 h-15px ms-1"
+              >
+                <span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="18"
@@ -528,7 +535,7 @@
             </v-col>
         </v-row>
 
-        <v-row v-if=" !is_empty_obj(selectedVariation) && Number.isInteger(cartQuantity) && !productDetails.is_digital">
+        <v-row v-if=" !is_empty_obj(selectedVariation) && Number.isInteger(cartQuantity) && !productDetails.is_digital" style="align-items: center" class="mt-0 mt-md-auto">
           <v-col
             cols="3"
             lg="2"
@@ -543,22 +550,34 @@
           </v-col>
         </v-row>
         <div class="my-5">
-          <v-btn
-          style="border: 1px solid #D5D5D5 !important;"
-            v-if="Number.isInteger(cartQuantity)"
-            class=" border border-black mb-2"
-            elevation="0"
-            block
-            @click="buyNow"
-          >{{ $t("buy_now") }}</v-btn>
-          <v-btn
-            v-if="Number.isInteger(cartQuantity)"
-            color="grey-darken-4 white-text"
-            elevation="0"
-            block
-            @click="addCart"
-          >{{ $t("add_to_cart") }}</v-btn>
- 
+          <v-row v-if="Number.isInteger(cartQuantity)" no-gutters>
+            <v-col cols="12" sm="6" class="pr-sm-2">
+              <v-btn
+                color="primary"
+                class="white-text"
+                elevation="0"
+                block
+                size="large"
+                @click="buyNow"
+                style="font-weight: 700; font-size: 16px; height: 48px;"
+              >
+                {{ $t("buy_now") }}
+              </v-btn>
+            </v-col>
+            <v-col cols="12" sm="6" class="pl-sm-2 mt-2 mt-sm-0">
+              <v-btn
+                variant="outlined"
+                color="grey-darken-1"
+                elevation="0"
+                block
+                size="large"
+                @click="addCart"
+                style="font-weight: 500; font-size: 14px; height: 48px; border: 1px solid #9e9e9e !important;"
+              >
+                {{ $t("add_to_cart") }}
+              </v-btn>
+            </v-col>
+          </v-row>
         </div>
         <div
           class="my-5"

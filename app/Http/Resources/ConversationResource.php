@@ -23,11 +23,12 @@ class ConversationResource extends JsonResource
             'receiver_id' => $this->receiver_id,
             'receiver_name' => $this->receiver->name,
             'receiver_image' => uploaded_asset($this->receiver->avatar),
+            'receiver_shop' => optional($this->receiver->shop)->name,
             'title' => $this->title,
             'sender_viewed' => (int) $this->sender_viewed,
             'receiver_viewed' => (int) $this->receiver_viewed,
             'latest_message' => $this->messages()->latest()->first(),
-            'latest_message_time' => date('h:i:m d-m-Y', strtotime($this->messages()->latest()->first()->created_at)),
+            'latest_message_time' => $this->messages()->latest()->first() ? date('h:i:m d-m-Y', strtotime($this->messages()->latest()->first()->created_at)) : null,
         ];
     }
 }
